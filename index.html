@@ -12,7 +12,7 @@
             --border: #e2e8f0;
             --text: #334155;
             --text-light: #64748b;
-            --accent: #4f46e5;     /* спокойный индиго */
+            --accent: #4f46e5;
             --accent-light: #6366f1;
             --success: #10b981;
             --shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.04), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
@@ -55,15 +55,8 @@
             color: var(--text-light);
             transition: all 0.3s ease;
         }
-        .ad:hover {
-            transform: translateY(-8px);
-            box-shadow: var(--shadow-lg);
-        }
-        .ad i {
-            font-size: 3.5rem;
-            margin-bottom: 16px;
-            color: #cbd5e1;
-        }
+        .ad:hover { transform: translateY(-8px); box-shadow: var(--shadow-lg); }
+        .ad i { font-size: 3.5rem; margin-bottom: 16px; color: #cbd5e1; }
         .main {
             background: var(--card);
             border-radius: 24px;
@@ -71,13 +64,7 @@
             box-shadow: var(--shadow-lg);
             padding: 48px 40px;
         }
-        h1 {
-            text-align: center;
-            font-size: 2.6rem;
-            font-weight: 700;
-            color: var(--accent);
-            margin-bottom: 40px;
-        }
+        h1 { text-align: center; font-size: 2.6rem; font-weight: 700; color: var(--accent); margin-bottom: 40px; }
         .tabs {
             display: flex;
             background: #f1f5f9;
@@ -95,14 +82,8 @@
             cursor: pointer;
             transition: all 0.3s ease;
         }
-        .tab.active {
-            background: var(--accent);
-            color: white;
-            box-shadow: 0 8px 20px rgba(79, 70, 229, 0.3);
-        }
-        .form-group {
-            margin-bottom: 32px;
-        }
+        .tab.active { background: var(--accent); color: white; box-shadow: 0 8px 20px rgba(79,70,229,0.3); }
+        .form-group { margin-bottom: 32px; }
         label {
             display: flex;
             align-items: center;
@@ -124,7 +105,7 @@
         input:focus, select:focus {
             outline: none;
             border-color: var(--accent);
-            box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.15);
+            box-shadow: 0 0 0 4px rgba(79,70,229,0.15);
         }
         .result {
             margin-top: 48px;
@@ -148,7 +129,6 @@
             color: var(--text-light);
             font-size: 0.95rem;
         }
-
         @media (max-width: 1300px) {
             .container { grid-template-columns: 1fr; }
             .ad { height: 280px; margin-bottom: 24px; }
@@ -182,12 +162,12 @@
         </div>
 
         <div class="form-group">
-            <label><i class="fas fa-ruble-sign"></i> Сумма</label>
+            <label>Сумма</label>
             <input type="number" id="amount" placeholder="10 000.00" step="0.01" value="10000">
         </div>
 
         <div class="form-group">
-            <label><i class="fas fa-percent"></i> Ставка НДС</label>
+            <label>Ставка НДС</label>
             <select id="rate">
                 <option value="0">0%</option>
                 <option value="10">10%</option>
@@ -216,6 +196,11 @@
     const resultDiv = document.getElementById('result');
     const tabs = document.querySelectorAll('.tab');
 
+    // Форматирование числа: 12345.5 → 12 345.50 ₽
+    function format(num) {
+        return num.toLocaleString('ru-RU', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
+
     function calculate() {
         let amount = parseFloat(amountInput.value) || 0;
         let rate = parseFloat(rateSelect.value);
@@ -224,25 +209,29 @@
         let nds, total, base;
 
         if (document.querySelector('.tab.active').dataset.mode === 'add') {
+            // Начислить НДС
+            base = amount;
             nds = amount * percent;
             total = amount + nds;
-            base = amount;
+
             resultDiv.innerHTML = `
-                Сумма без НДС: <strong>${base.toLocaleString('ru-RU', {minimumFractionDigits: 2})} ₽</strong><br><br>
-                + НДС ${rate}%: <strong>${nds.toLocaleString('ru-RU', {minimumFractionDigits: 2})} ₽</strong>
-                <div style="margin-top: 24px; font-size: 3rem;">
-                    Итого: <strong>${total.toLocaleString('ru-RU', {minimumFractionDigits: 2})} ₽</strong>
+                Сумма без НДС: <strong>${format(base)} ₽</strong><br><br>
+                + НДС ${rate}%: <strong>${format(nds)} ₽</strong>
+                <div style="margin-top: 28px; font-size: 3rem;">
+                    Итого: <strong>${format(total)} ₽</strong>
                 </div>
             `;
         } else {
+            // Выделить НДС
             total = amount;
             base = amount / (1 + percent);
             nds = amount - base;
+
             resultDiv.innerHTML = `
-                Сумма с НДС: <strong>${total.toLocaleString('ru-RU', {minimumFractionDigits: 2})} ₽</strong><br><br>
-                − НДС ${rate}%: <strong>${nds.toLocaleString('ru-RU', {minimumFractionDigits: 2})} ₽</strong>
-                <div style="margin-top: 24px; font-size: 3rem;">
-                    Без НДС: <strong>${base.toLocaleString('ru-RU', {minimumFractionDigits: 2})} ₽</strong>
+                Сумма с НДС: <strong>${format(total)} ₽</strong><br><br>
+                − НДС ${rate}%: <strong>${format(nds)} ₽</strong>
+                <div style="margin-top: 28px; font-size: 3rem;">
+                    Без НДС: <strong>${format(base)} ₽</strong>
                 </div>
             `;
         }
@@ -257,6 +246,7 @@
     amountInput.addEventListener('input', calculate);
     rateSelect.addEventListener('change', calculate);
 
+    // Первый расчёт
     calculate();
 </script>
 </body>
