@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Калькулятор НДС</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --border: #e2e8f0;
+            --text: #334155;
+            --text-light: #64748b;
+            --accent: #4f46e5;     /* спокойный индиго */
+            --accent-light: #6366f1;
+            --success: #10b981;
+            --shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.04), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            --shadow-lg: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+        }
+        body {
+            margin: 0;
+            padding: 20px 0;
+            min-height: 100vh;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(to bottom, #f1f5f9, #e2e8f0);
+            color: var(--text);
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1500px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 300px 1fr 300px;
+            gap: 32px;
+            align-items: start;
+        }
+        .sidebar {
+            position: sticky;
+            top: 20px;
+            align-self: start;
+        }
+        .ad {
+            height: 600px;
+            background: var(--card);
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            color: var(--text-light);
+            transition: all 0.3s ease;
+        }
+        .ad:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+        }
+        .ad i {
+            font-size: 3.5rem;
+            margin-bottom: 16px;
+            color: #cbd5e1;
+        }
+        .main {
+            background: var(--card);
+            border-radius: 24px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-lg);
+            padding: 48px 40px;
+        }
+        h1 {
+            text-align: center;
+            font-size: 2.6rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 40px;
+        }
+        .tabs {
+            display: flex;
+            background: #f1f5f9;
+            border-radius: 16px;
+            padding: 8px;
+            margin-bottom: 40px;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .tab {
+            flex: 1;
+            padding: 16px;
+            text-align: center;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .tab.active {
+            background: var(--accent);
+            color: white;
+            box-shadow: 0 8px 20px rgba(79, 70, 229, 0.3);
+        }
+        .form-group {
+            margin-bottom: 32px;
+        }
+        label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--text);
+        }
+        input, select {
+            width: 100%;
+            padding: 18px 20px;
+            border: 2px solid var(--border);
+            border-radius: 14px;
+            font-size: 1.3rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            background: white;
+        }
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.15);
+        }
+        .result {
+            margin-top: 48px;
+            padding: 36px;
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            border-radius: 18px;
+            text-align: center;
+            font-size: 1.5rem;
+            line-height: 2;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+        .result strong {
+            font-size: 2.8rem;
+            color: var(--success);
+            font-weight: 800;
+        }
+        footer {
+            text-align: center;
+            margin-top: 48px;
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
+
+        @media (max-width: 1300px) {
+            .container { grid-template-columns: 1fr; }
+            .ad { height: 280px; margin-bottom: 24px; }
+        }
+        @media (max-width: 640px) {
+            .main { padding: 32px 20px; }
+            h1 { font-size: 2.2rem; }
+            .tabs { flex-direction: column; }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div class="container">
+    <!-- Левая реклама -->
+    <div class="sidebar">
+        <div class="ad">
+            <i class="fas fa-chart-line"></i>
+            <div>Реклама<br>300 × 600</div>
+        </div>
+    </div>
+
+    <!-- Калькулятор -->
+    <div class="main">
+        <h1>Калькулятор НДС</h1>
+
+        <div class="tabs">
+            <div class="tab active" data-mode="add">Начислить НДС</div>
+            <div class="tab" data-mode="subtract">Выделить НДС</div>
+        </div>
+
+        <div class="form-group">
+            <label><i class="fas fa-ruble-sign"></i> Сумма</label>
+            <input type="number" id="amount" placeholder="10 000.00" step="0.01" value="10000">
+        </div>
+
+        <div class="form-group">
+            <label><i class="fas fa-percent"></i> Ставка НДС</label>
+            <select id="rate">
+                <option value="0">0%</option>
+                <option value="10">10%</option>
+                <option value="20" selected>20%</option>
+                <option value="22">22%</option>
+            </select>
+        </div>
+
+        <div class="result" id="result"></div>
+
+        <footer>Калькулятор НДС • Работает без интернета • 2025</footer>
+    </div>
+
+    <!-- Правая реклама -->
+    <div class="sidebar">
+        <div class="ad">
+            <i class="fas fa-handshake"></i>
+            <div>Ваша реклама<br>здесь</div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const amountInput = document.getElementById('amount');
+    const rateSelect = document.getElementById('rate');
+    const resultDiv = document.getElementById('result');
+    const tabs = document.querySelectorAll('.tab');
+
+    function calculate() {
+        let amount = parseFloat(amountInput.value) || 0;
+        let rate = parseFloat(rateSelect.value);
+        let percent = rate / 100;
+
+        let nds, total, base;
+
+        if (document.querySelector('.tab.active').dataset.mode === 'add') {
+            nds = amount * percent;
+            total = amount + nds;
+            base = amount;
+            resultDiv.innerHTML = `
+                Сумма без НДС: <strong>${base.toLocaleString('ru-RU', {minimumFractionDigits: 2})} ₽</strong><br><br>
+                + НДС ${rate}%: <strong>${nds.toLocaleString('ru-RU', {minimumFractionDigits: 2})} ₽</strong>
+                <div style="margin-top: 24px; font-size: 3rem;">
+                    Итого: <strong>${total.toLocaleString('ru-RU', {minimumFractionDigits: 2})} ₽</strong>
+                </div>
+            `;
+        } else {
+            total = amount;
+            base = amount / (1 + percent);
+            nds = amount - base;
+            resultDiv.innerHTML = `
+                Сумма с НДС: <strong>${total.toLocaleString('ru-RU', {minimumFractionDigits: 2})} ₽</strong><br><br>
+                − НДС ${rate}%: <strong>${nds.toLocaleString('ru-RU', {minimumFractionDigits: 2})} ₽</strong>
+                <div style="margin-top: 24px; font-size: 3rem;">
+                    Без НДС: <strong>${base.toLocaleString('ru-RU', {minimumFractionDigits: 2})} ₽</strong>
+                </div>
+            `;
+        }
+    }
+
+    tabs.forEach(tab => tab.addEventListener('click', () => {
+        tabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        calculate();
+    }));
+
+    amountInput.addEventListener('input', calculate);
+    rateSelect.addEventListener('change', calculate);
+
+    calculate();
+</script>
+</body>
+</html>
