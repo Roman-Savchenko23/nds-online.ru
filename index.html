@@ -14,9 +14,21 @@
             --text-light: #64748b;
             --accent: #4f46e5;
             --success: #10b981;
+            --warning: #f59e0b;
             --shadow: 0 20px 25px -5px rgba(0,0,0,0.04), 0 10px 10px -5px rgba(0,0,0,0.04);
             --shadow-lg: 0 25px 50px -12px rgba(0,0,0,0.15);
         }
+
+        [data-theme="dark"] {
+            --bg: #0f172a;
+            --card: #1e293b;
+            --border: #334155;
+            --text: #f1f5f9;
+            --text-light: #94a3b8;
+            --accent: #6366f1;
+            --success: #22c55e;
+        }
+
         body {
             margin: 0;
             padding: 20px 0;
@@ -24,7 +36,13 @@
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background: linear-gradient(to bottom, #f1f5f9, #e2e8f0);
             color: var(--text);
+            transition: all 0.3s ease;
         }
+
+        [data-theme="dark"] body {
+            background: linear-gradient(to bottom, #0f172a, #1e293b);
+        }
+
         .container {
             max-width: 1500px;
             margin: 0 auto;
@@ -34,7 +52,39 @@
             gap: 32px;
             align-items: start;
         }
-        .sidebar { position: sticky; top: 20px; align-self: start; }
+
+        .header-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .theme-toggle {
+            background: var(--card);
+            border: 2px solid var(--border);
+            border-radius: 50px;
+            padding: 10px 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            color: var(--text);
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            border-color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        .sidebar {
+            position: sticky;
+            top: 20px;
+            align-self: start;
+        }
+
         .ad {
             height: 600px;
             background: var(--card);
@@ -48,9 +98,48 @@
             font-size: 1.1rem;
             color: var(--text-light);
             transition: all 0.3s ease;
+            margin-bottom: 24px;
         }
-        .ad:hover { transform: translateY(-8px); box-shadow: var(--shadow-lg); }
-        .ad i { font-size: 3.5rem; margin-bottom: 16px; color: #cbd5e1; }
+
+        .ad:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .ad i {
+            font-size: 3.5rem;
+            margin-bottom: 16px;
+            color: #cbd5e1;
+        }
+
+        [data-theme="dark"] .ad i {
+            color: #475569;
+        }
+
+        .info-block {
+            background: var(--card);
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+            padding: 24px;
+            transition: all 0.3s ease;
+            margin-bottom: 24px;
+        }
+
+        .info-block h3 {
+            color: var(--accent);
+            margin-top: 0;
+            margin-bottom: 16px;
+        }
+
+        .info-block ul {
+            padding-left: 20px;
+            margin-bottom: 0;
+        }
+
+        .info-block li {
+            margin-bottom: 8px;
+        }
 
         .main {
             background: var(--card);
@@ -58,8 +147,16 @@
             border: 1px solid var(--border);
             box-shadow: var(--shadow-lg);
             padding: 48px 40px;
+            transition: all 0.3s ease;
         }
-        h1 { text-align: center; font-size: 2.6rem; font-weight: 700; color: var(--accent); margin-bottom: 40px; }
+
+        h1 {
+            text-align: center;
+            font-size: 2.6rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 40px;
+        }
 
         .tabs {
             display: flex;
@@ -69,6 +166,11 @@
             margin-bottom: 40px;
             box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
         }
+
+        [data-theme="dark"] .tabs {
+            background: #334155;
+        }
+
         .tab {
             flex: 1;
             padding: 16px;
@@ -78,32 +180,75 @@
             cursor: pointer;
             transition: all 0.3s ease;
         }
-        .tab.active { background: var(--accent); color: white; box-shadow: 0 8px 20px rgba(79,70,229,0.3); }
+
+        .tab.active {
+            background: var(--accent);
+            color: white;
+            box-shadow: 0 8px 20px rgba(79,70,229,0.3);
+        }
 
         .form-group {
             margin-bottom: 28px;
         }
+
         label {
             display: block;
             font-weight: 600;
             margin-bottom: 10px;
             color: var(--text);
         }
+
         input, select {
             width: 100%;
-            padding: 16px 20px;           /* уменьшил высоту */
+            padding: 16px 20px;
             border: 2px solid var(--border);
             border-radius: 14px;
-            font-size: 1.25rem;           /* чуть меньше шрифт */
+            font-size: 1.25rem;
             font-weight: 500;
             transition: all 0.3s ease;
-            background: white;
+            background: var(--card);
+            color: var(--text);
             box-sizing: border-box;
         }
+
         input:focus, select:focus {
             outline: none;
             border-color: var(--accent);
             box-shadow: 0 0 0 4px rgba(79,70,229,0.15);
+        }
+
+        .input-error {
+            border-color: #ef4444;
+        }
+
+        .error-message {
+            color: #ef4444;
+            font-size: 0.9rem;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .quick-amounts {
+            display: flex;
+            gap: 12px;
+            margin-top: 12px;
+            flex-wrap: wrap;
+        }
+
+        .quick-amount {
+            padding: 8px 16px;
+            background: var(--card);
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            color: var(--text);
+        }
+
+        .quick-amount:hover {
+            border-color: var(--accent);
+            transform: translateY(-2px);
         }
 
         .result {
@@ -116,23 +261,114 @@
             font-size: 1.5rem;
             line-height: 2;
             box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            position: relative;
         }
+
+        [data-theme="dark"] .result {
+            background: #064e3b;
+            border-color: #059669;
+        }
+
         .result strong {
             font-size: 2.8rem;
             color: var(--success);
             font-weight: 800;
         }
-        footer { text-align: center; margin-top: 48px; color: var(--text-light); font-size: 0.95rem; }
+
+        .copy-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--success);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 10px 16px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .copy-btn:hover {
+            background: #0da271;
+            transform: translateY(-2px);
+        }
+
+        .history {
+            background: var(--card);
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            padding: 24px;
+            margin-top: 32px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .history h3 {
+            margin-top: 0;
+            color: var(--accent);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .history-item {
+            padding: 16px;
+            border-bottom: 1px solid var(--border);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .history-item:hover {
+            background: var(--bg);
+            border-radius: 10px;
+        }
+
+        .clear-history {
+            background: none;
+            border: none;
+            color: var(--text-light);
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        .clear-history:hover {
+            color: var(--accent);
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 48px;
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
 
         @media (max-width: 1300px) {
-            .container { grid-template-columns: 1fr; }
-            .ad { height: 280px; margin-bottom: 24px; }
+            .container {
+                grid-template-columns: 1fr;
+            }
+            .sidebar {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            .ad, .info-block {
+                width: 100%;
+                max-width: 500px;
+                height: 280px;
+                margin-bottom: 24px;
+            }
         }
+
         @media (max-width: 640px) {
             .main { padding: 32px 20px; }
             h1 { font-size: 2.2rem; }
             .tabs { flex-direction: column; }
             input, select { padding: 14px 18px; font-size: 1.1rem; }
+            .quick-amounts { justify-content: center; }
         }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -140,9 +376,31 @@
 <body>
 
 <div class="container">
-    <div class="sidebar"><div class="ad"><i class="fas fa-chart-line"></i><div>Реклама<br>300 × 600</div></div></div>
+    <div class="sidebar">
+        <div class="ad">
+            <i class="fas fa-chart-line"></i>
+            <div>Реклама<br>300 × 600</div>
+        </div>
+        <div class="info-block">
+            <h3><i class="fas fa-info-circle"></i> Информация о НДС</h3>
+            <ul>
+                <li><strong>0%</strong> – применяется, например, к экспорту</li>
+                <li><strong>10%</strong> – применяется к некоторым продовольственным товарам, детским товарам, книгам и т.д.</li>
+                <li><strong>20%</strong> – общая ставка для большинства товаров и услуг</li>
+                <li><strong>22%</strong> – применяется в отдельных случаях (например, при ввозе товаров)</li>
+            </ul>
+        </div>
+    </div>
 
     <div class="main">
+        <div class="header-controls">
+            <div></div> <!-- Пустой элемент для выравнивания -->
+            <button class="theme-toggle" id="themeToggle">
+                <i class="fas fa-moon"></i>
+                <span>Темная тема</span>
+            </button>
+        </div>
+
         <h1>Калькулятор НДС</h1>
 
         <div class="tabs">
@@ -152,7 +410,16 @@
 
         <div class="form-group">
             <label>Сумма</label>
-            <input type="number" id="amount" placeholder="10 000.00" step="0.01" value="10000">
+            <input type="text" id="amount" placeholder="10 000,00" value="10 000,00">
+            <div class="error-message" id="amount-error">Пожалуйста, введите корректную сумму</div>
+
+            <div class="quick-amounts">
+                <div class="quick-amount" data-amount="1000">1 000</div>
+                <div class="quick-amount" data-amount="5000">5 000</div>
+                <div class="quick-amount" data-amount="10000">10 000</div>
+                <div class="quick-amount" data-amount="50000">50 000</div>
+                <div class="quick-amount" data-amount="100000">100 000</div>
+            </div>
         </div>
 
         <div class="form-group">
@@ -165,12 +432,30 @@
             </select>
         </div>
 
-        <div class="result" id="result"></div>
+        <div class="result" id="result">
+            <button class="copy-btn" id="copyBtn">
+                <i class="fas fa-copy"></i>
+                Копировать
+            </button>
+        </div>
+
+        <div class="history">
+            <h3>
+                История расчетов
+                <button class="clear-history" id="clearHistory">Очистить</button>
+            </h3>
+            <div id="historyList"></div>
+        </div>
 
         <footer>Калькулятор НДС • Работает без интернета • 2025</footer>
     </div>
 
-    <div class="sidebar"><div class="ad"><i class="fas fa-handshake"></i><div>Ваша реклама<br>здесь</div></div></></div>
+    <div class="sidebar">
+        <div class="ad">
+            <i class="fas fa-handshake"></i>
+            <div>Ваша реклама<br>здесь</div>
+        </div>
+    </div>
 </div>
 
 <script>
@@ -178,47 +463,239 @@
     const rateSelect = document.getElementById('rate');
     const resultDiv = document.getElementById('result');
     const tabs = document.querySelectorAll('.tab');
+    const amountError = document.getElementById('amount-error');
+    const themeToggle = document.getElementById('themeToggle');
+    const copyBtn = document.getElementById('copyBtn');
+    const historyList = document.getElementById('historyList');
+    const clearHistoryBtn = document.getElementById('clearHistory');
+    const quickAmounts = document.querySelectorAll('.quick-amount');
 
-    function format(num) {
-        return num.toLocaleString('ru-RU', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    let calculationHistory = JSON.parse(localStorage.getItem('ndsCalculatorHistory')) || [];
+
+    // Инициализация темы
+    function initTheme() {
+        const savedTheme = localStorage.getItem('ndsCalculatorTheme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        updateThemeToggle(savedTheme);
     }
 
-    function calculate() {
-        let amount = parseFloat(amountInput.value) || 0;
-        let rate = parseFloat(rateSelect.value);
-        let percent = rate / 100;
+    function updateThemeToggle(theme) {
+        const icon = themeToggle.querySelector('i');
+        const text = themeToggle.querySelector('span');
 
-        if (document.querySelector('.tab.active').dataset.mode === 'add') {
-            let nds = amount * percent;
-            let total = amount + nds;
-            resultDiv.innerHTML = `
-                Сумма без НДС: <strong>${format(amount)} ₽</strong><br><br>
-                + НДС ${rate}%: <strong>${format(nds)} ₽</strong>
-                <div style="margin-top: 28px; font-size: 3rem;">
-                    Итого: <strong>${format(total)} ₽</strong>
-                </div>
-            `;
+        if (theme === 'dark') {
+            icon.className = 'fas fa-sun';
+            text.textContent = 'Светлая тема';
         } else {
-            let base = amount / (1 + percent);
-            let nds = amount - base;
-            resultDiv.innerHTML = `
-                Сумма с НДС: <strong>${format(amount)} ₽</strong><br><br>
-                − НДС ${rate}%: <strong>${format(nds)} ₽</strong>
-                <div style="margin-top: 28px; font-size: 3rem;">
-                    Без НДС: <strong>${format(base)} ₽</strong>
-                </div>
-            `;
+            icon.className = 'fas fa-moon';
+            text.textContent = 'Темная тема';
         }
     }
 
+    function formatNumber(num) {
+        return num.toLocaleString('ru-RU', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
+
+    function parseFormattedNumber(str) {
+        const cleanStr = str.replace(/\s/g, '').replace(',', '.');
+        return parseFloat(cleanStr);
+    }
+
+    function formatInput(value) {
+        const num = parseFormattedNumber(value);
+        if (isNaN(num)) return '';
+        return formatNumber(num);
+    }
+
+    function addToHistory(calculation) {
+        calculationHistory.unshift(calculation);
+        if (calculationHistory.length > 10) {
+            calculationHistory = calculationHistory.slice(0, 10);
+        }
+        localStorage.setItem('ndsCalculatorHistory', JSON.stringify(calculationHistory));
+        renderHistory();
+    }
+
+    function renderHistory() {
+        historyList.innerHTML = '';
+
+        if (calculationHistory.length === 0) {
+            historyList.innerHTML = '<div style="text-align: center; color: var(--text-light); padding: 20px;">История пуста</div>';
+            return;
+        }
+
+        calculationHistory.forEach((item, index) => {
+            const historyItem = document.createElement('div');
+            historyItem.className = 'history-item';
+            historyItem.innerHTML = `
+                <div style="font-weight: 600;">${item.mode === 'add' ? 'Начисление' : 'Выделение'} НДС ${item.rate}%</div>
+                <div style="font-size: 0.9rem; color: var(--text-light);">
+                    Сумма: ${formatNumber(item.amount)} ₽ → ${formatNumber(item.result)} ₽
+                </div>
+            `;
+
+            historyItem.addEventListener('click', () => {
+                amountInput.value = formatNumber(item.amount);
+                rateSelect.value = item.rate;
+                document.querySelectorAll('.tab').forEach(tab => {
+                    tab.classList.toggle('active', tab.dataset.mode === item.mode);
+                });
+                calculate();
+            });
+
+            historyList.appendChild(historyItem);
+        });
+    }
+
+    function calculate() {
+        amountInput.classList.remove('input-error');
+        amountError.style.display = 'none';
+
+        const amountValue = amountInput.value;
+        const amount = parseFormattedNumber(amountValue);
+
+        if (isNaN(amount) || amount < 0) {
+            amountInput.classList.add('input-error');
+            amountError.style.display = 'block';
+            resultDiv.innerHTML = 'Пожалуйста, введите корректную сумму';
+            return;
+        }
+
+        const rate = parseFloat(rateSelect.value);
+        const percent = rate / 100;
+        const mode = document.querySelector('.tab.active').dataset.mode;
+
+        let calculationResult;
+
+        if (mode === 'add') {
+            const nds = amount * percent;
+            const total = amount + nds;
+            calculationResult = total;
+
+            resultDiv.innerHTML = `
+                <button class="copy-btn" id="copyBtn">
+                    <i class="fas fa-copy"></i>
+                    Копировать
+                </button>
+                Сумма без НДС: <strong>${formatNumber(amount)} ₽</strong><br><br>
+                + НДС ${rate}%: <strong>${formatNumber(nds)} ₽</strong>
+                <div style="margin-top: 28px; font-size: 3rem;">
+                    Итого: <strong>${formatNumber(total)} ₽</strong>
+                </div>
+            `;
+        } else { // Выделение НДС
+            if (rate === 0) {
+                calculationResult = amount;
+                resultDiv.innerHTML = `
+                    <button class="copy-btn" id="copyBtn">
+                        <i class="fas fa-copy"></i>
+                        Копировать
+                    </button>
+                    Сумма с НДС: <strong>${formatNumber(amount)} ₽</strong><br><br>
+                    − НДС ${rate}%: <strong>0,00 ₽</strong>
+                    <div style="margin-top: 28px; font-size: 3rem;">
+                        Без НДС: <strong>${formatNumber(amount)} ₽</strong>
+                    </div>
+                `;
+            } else {
+                let base, nds;
+                if (rate === 10) {
+                    // Для ставки 10% используется формула: сумма без НДС = сумма с НДС / 1.1
+                    base = amount / 1.1;
+                    nds = amount - base;
+                } else {
+                    // Для ставок 20% и 22% используется формула: сумма без НДС = сумма с НДС / (1 + процент)
+                    base = amount / (1 + percent);
+                    nds = amount - base;
+                }
+                calculationResult = base;
+
+                resultDiv.innerHTML = `
+                    <button class="copy-btn" id="copyBtn">
+                        <i class="fas fa-copy"></i>
+                        Копировать
+                    </button>
+                    Сумма с НДС: <strong>${formatNumber(amount)} ₽</strong><br><br>
+                    − НДС ${rate}%: <strong>${formatNumber(nds)} ₽</strong>
+                    <div style="margin-top: 28px; font-size: 3rem;">
+                        Без НДС: <strong>${formatNumber(base)} ₽</strong>
+                    </div>
+                `;
+            }
+        }
+
+        // Добавляем в историю
+        addToHistory({
+            mode: mode,
+            rate: rate,
+            amount: amount,
+            result: calculationResult,
+            timestamp: new Date().toISOString()
+        });
+
+        // Обновляем обработчик копирования
+        document.getElementById('copyBtn').addEventListener('click', copyResult);
+    }
+
+    function copyResult() {
+        const resultText = resultDiv.innerText.replace('Копировать', '').trim();
+        navigator.clipboard.writeText(resultText).then(() => {
+            const originalText = copyBtn.innerHTML;
+            copyBtn.innerHTML = '<i class="fas fa-check"></i> Скопировано!';
+            setTimeout(() => {
+                copyBtn.innerHTML = originalText;
+            }, 2000);
+        });
+    }
+
+    // Обработчики событий
     tabs.forEach(tab => tab.addEventListener('click', () => {
         tabs.forEach(t => t.classList.remove('active'));
         tab.classList.add('active');
         calculate();
     }));
 
-    amountInput.addEventListener('input', calculate);
+    amountInput.addEventListener('input', () => {
+        const formatted = formatInput(amountInput.value);
+        if (amountInput.value !== formatted) {
+            amountInput.value = formatted;
+        }
+        calculate();
+    });
+
+    amountInput.addEventListener('blur', () => {
+        amountInput.value = formatInput(amountInput.value);
+        calculate();
+    });
+
     rateSelect.addEventListener('change', calculate);
+
+    themeToggle.addEventListener('click', () => {
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+
+        document.documentElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('ndsCalculatorTheme', newTheme);
+        updateThemeToggle(newTheme);
+    });
+
+    quickAmounts.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const amount = parseFloat(btn.dataset.amount);
+            amountInput.value = formatNumber(amount);
+            calculate();
+        });
+    });
+
+    clearHistoryBtn.addEventListener('click', () => {
+        calculationHistory = [];
+        localStorage.setItem('ndsCalculatorHistory', JSON.stringify(calculationHistory));
+        renderHistory();
+    });
+
+    // Инициализация
+    initTheme();
+    renderHistory();
     calculate();
 </script>
 </body>
