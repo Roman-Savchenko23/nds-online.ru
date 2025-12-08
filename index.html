@@ -4,10 +4,23 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="google-site-verification" content="bKRPEMYX2Wb-llJiPy3mub-BU7t_uM3OkkQ5QDBU2aA" />
-  <meta name="description" content="Набор онлайн-калькуляторов: НДС, зарплата (брутто/нетто), УСН, маржа. Расчет налогов, выплат и цен с точностью до копеек. История расчётов, сравнение сценариев, экспорт в PDF." />
-  <title>Calc.Pro • Калькуляторы НДС, зарплаты, налогов + маржа</title>
+  <meta name="description" content="Набор онлайн-калькуляторов: НДС, зарплата (брутто/нетто), УСН. Расчет налогов, выплат и цен с точностью до копеек. Примеры и статьи для бухгалтеров, ИП и бизнеса." />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Calc.Pro — онлайн-калькуляторы НДС, зарплаты и УСН" />
+  <meta property="og:description" content="Быстрые и точные онлайн-калькуляторы НДС, зарплаты (брутто/нетто) и УСН для бухгалтеров, ИП и бизнеса." />
+  <meta property="og:url" content="https://nds-online22.ru/" />
+  <meta property="og:image" content="https://nds-online22.ru/picture.png" />
+
+  <!-- Twitter Cards (опционально, но полезно) -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Calc.Pro — онлайн-калькуляторы НДС, зарплаты и УСН" />
+  <meta name="twitter:description" content="Быстрые и точные онлайн-калькуляторы НДС, зарплаты (брутто/нетто) и УСН." />
+  <meta name="twitter:image" content="https://nds-online22.ru/picture.png" />
+
+  <title>Calc.Pro • Калькуляторы НДС, зарплаты, налогов</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800&display=swap" rel="stylesheet" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
   <style>
     :root {
       --bg: #0a0a10;
@@ -17,7 +30,6 @@
       --accent: #00e0ff;
       --gold: #ffd700;
       --green: #00ff9d;
-      --red: #ff6b6b;
       --border: rgba(255, 255, 255, 0.14);
     }
     [data-theme=light] {
@@ -28,7 +40,6 @@
       --accent: #0066ff;
       --gold: #b8860b;
       --green: #00a853;
-      --red: #d32f2f;
       --border: rgba(0, 0, 0, 0.11);
     }
     * {
@@ -59,7 +70,6 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 1rem;
     }
     .logo {
       font: 800 1.8rem "Inter", sans-serif;
@@ -74,8 +84,6 @@
       gap: 0.5rem;
       list-style: none;
       flex-wrap: wrap;
-      flex: 1;
-      align-items: center;
     }
     .nav-tabs li {
       user-select: none;
@@ -90,23 +98,13 @@
       color: var(--muted);
       border: none;
       background: transparent;
-      white-space: nowrap;
-      position: relative;
     }
     .nav-tab.active {
       background: linear-gradient(135deg, var(--accent), var(--green));
       color: #000;
-      box-shadow: 0 8px 24px rgba(0, 224, 255, 0.3);
     }
     .nav-tab:hover:not(.active) {
       background: #fff1;
-      transform: translateY(-2px);
-    }
-    .nav-divider {
-      width: 1px;
-      height: 24px;
-      background: var(--border);
-      margin: 0 0.5rem;
     }
     .theme-toggle {
       width: 50px;
@@ -119,7 +117,6 @@
       display: flex;
       align-items: center;
       transition: 0.3s;
-      flex-shrink: 0;
     }
     .theme-toggle::after {
       content: "";
@@ -130,12 +127,10 @@
       transition: 0.4s;
       display: block;
       margin-left: 2px;
-      box-shadow: 0 4px 12px rgba(255, 215, 0, 0.3);
     }
     [data-theme=light] .theme-toggle::after {
       transform: translateX(16px);
       background: var(--accent);
-      box-shadow: 0 4px 12px rgba(0, 102, 255, 0.3);
     }
     .container {
       max-width: 1600px;
@@ -156,18 +151,6 @@
       box-shadow: 0 15px 40px #00000040;
       display: flex;
       flex-direction: column;
-      max-height: calc(100vh - 10rem);
-      overflow-y: auto;
-    }
-    .sidebar::-webkit-scrollbar {
-      width: 6px;
-    }
-    .sidebar::-webkit-scrollbar-track {
-      background: transparent;
-    }
-    .sidebar::-webkit-scrollbar-thumb {
-      background: var(--border);
-      border-radius: 3px;
     }
     .ad {
       height: 600px;
@@ -179,7 +162,6 @@
       font: 600 1.3rem/1.4 Inter;
       margin-bottom: 1.5rem;
       flex-shrink: 0;
-      background: #fff0.02;
     }
     .main {
       background: var(--card);
@@ -224,7 +206,6 @@
       text-align: center;
       margin-bottom: 0.5rem;
       user-select: none;
-      letter-spacing: -0.02em;
     }
     h2 {
       font: 700 1.4rem "Inter", sans-serif;
@@ -238,7 +219,6 @@
       margin-bottom: 2rem;
       font-size: 1rem;
       user-select: none;
-      line-height: 1.5;
     }
     .calc-block {
       background: #fff1;
@@ -246,7 +226,6 @@
       padding: 2.5rem;
       margin-bottom: 2rem;
       border: 1px solid var(--border);
-      backdrop-filter: blur(10px);
     }
     label {
       display: block;
@@ -270,7 +249,7 @@
     input:focus, select:focus, textarea:focus {
       outline: none;
       border-color: var(--accent);
-      box-shadow: 0 0 0 3px rgba(0, 224, 255, 0.2);
+      box-shadow: 0 0 0 3px #00e0ff30;
     }
     select {
       background: var(--card) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%23c8c8e0' stroke-width='2'%3E%3Cpolyline points='6,9 12,15 18,9'%3E%3C/polyline%3E%3C/svg%3E") no-repeat right 12px center;
@@ -285,12 +264,6 @@
       gap: 1rem;
       margin: 1.5rem 0;
     }
-    .btn-row-3 {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 0.8rem;
-      margin: 1.5rem 0;
-    }
     button {
       padding: 16px;
       border: none;
@@ -303,32 +276,18 @@
     .btn-primary {
       background: linear-gradient(135deg, var(--accent), var(--green));
       color: #000;
-      box-shadow: 0 10px 30px rgba(0, 224, 255, 0.4);
-      font-weight: 700;
+      box-shadow: 0 10px 30px #00e0ff60;
     }
     .btn-primary:hover {
-      filter: brightness(1.15);
-      transform: translateY(-2px);
-      box-shadow: 0 15px 40px rgba(0, 224, 255, 0.5);
-    }
-    .btn-primary:active {
-      transform: translateY(0);
+      filter: brightness(1.1);
     }
     .btn-secondary {
       background: #fff1;
       color: var(--text);
       border: 1px solid var(--border);
-      font-size: 0.9rem;
-      padding: 14px;
     }
     .btn-secondary:hover {
       background: #fff3;
-      border-color: var(--accent);
-    }
-    .btn-secondary.small {
-      padding: 10px 12px;
-      font-size: 0.85rem;
-      border-radius: 12px;
     }
     .result-box {
       background: #fff1;
@@ -336,7 +295,7 @@
       padding: 2rem;
       margin-top: 1.5rem;
       border: 1px solid var(--border);
-      min-height: 140px;
+      min-height: 120px;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -345,18 +304,14 @@
       user-select: none;
       cursor: pointer;
       transition: 0.3s;
-      backdrop-filter: blur(10px);
     }
     .result-box:hover {
-      box-shadow: 0 0 30px rgba(0, 224, 255, 0.3);
-      border-color: var(--accent);
-      transform: translateY(-4px);
+      box-shadow: 0 0 20px var(--accent);
     }
     .result-label {
       color: var(--muted);
       font-size: 0.9rem;
       margin-bottom: 0.4rem;
-      font-weight: 500;
     }
     .result-value {
       font-size: 2.5rem;
@@ -365,121 +320,13 @@
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       user-select: text;
-      letter-spacing: -0.01em;
     }
     .result-sub {
       color: var(--muted);
       font-size: 0.9rem;
-      margin-top: 0.8rem;
-      line-height: 1.5;
+      margin-top: 0.6rem;
+      line-height: 1.4;
       user-select: text;
-      font-weight: 500;
-    }
-    .advice-box {
-      background: linear-gradient(135deg, rgba(0, 255, 157, 0.1), rgba(0, 224, 255, 0.1));
-      border: 1px solid rgba(0, 255, 157, 0.3);
-      border-radius: 16px;
-      padding: 1.5rem;
-      margin-top: 1.5rem;
-      border-left: 4px solid var(--green);
-    }
-    .advice-box h4 {
-      color: var(--green);
-      font-size: 0.95rem;
-      margin-bottom: 0.6rem;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-    .advice-box p {
-      color: var(--muted);
-      font-size: 0.9rem;
-      line-height: 1.5;
-      margin: 0.4rem 0;
-    }
-    .warning-box {
-      background: linear-gradient(135deg, rgba(255, 107, 107, 0.1), rgba(255, 193, 7, 0.1));
-      border: 1px solid rgba(255, 107, 107, 0.3);
-      border-radius: 16px;
-      padding: 1.5rem;
-      margin-top: 1rem;
-      border-left: 4px solid var(--red);
-    }
-    .warning-box h4 {
-      color: var(--red);
-      font-size: 0.95rem;
-      margin-bottom: 0.6rem;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-    .warning-box p {
-      color: var(--muted);
-      font-size: 0.9rem;
-      line-height: 1.5;
-    }
-    .history-item {
-      background: #fff0.5;
-      border-radius: 12px;
-      padding: 1rem;
-      margin-bottom: 0.8rem;
-      border: 1px solid var(--border);
-      cursor: pointer;
-      transition: 0.3s;
-      font-size: 0.85rem;
-    }
-    .history-item:hover {
-      background: #fff1;
-      border-color: var(--accent);
-    }
-    .history-item-title {
-      font-weight: 600;
-      color: var(--gold);
-      margin-bottom: 0.3rem;
-    }
-    .history-item-meta {
-      color: var(--muted);
-      font-size: 0.75rem;
-    }
-    .history-item-value {
-      color: var(--green);
-      font-weight: 700;
-      margin-top: 0.4rem;
-    }
-    .comparison-container {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1.5rem;
-      margin-top: 2rem;
-    }
-    .comparison-column {
-      background: #fff0.5;
-      border-radius: 16px;
-      padding: 1.5rem;
-      border: 1px solid var(--border);
-    }
-    .comparison-column h3 {
-      color: var(--gold);
-      font-size: 1rem;
-      margin-bottom: 1rem;
-      text-align: center;
-    }
-    .comparison-row {
-      display: flex;
-      justify-content: space-between;
-      padding: 0.6rem 0;
-      border-bottom: 1px solid var(--border);
-      font-size: 0.9rem;
-    }
-    .comparison-row:last-child {
-      border: none;
-    }
-    .comparison-row-label {
-      color: var(--muted);
-    }
-    .comparison-row-value {
-      color: var(--green);
-      font-weight: 700;
     }
     .blog-post {
       background: #fff1;
@@ -487,38 +334,29 @@
       padding: 2rem;
       margin-bottom: 1.5rem;
       border: 1px solid var(--border);
-      backdrop-filter: blur(10px);
-      transition: 0.3s;
-    }
-    .blog-post:hover {
-      box-shadow: 0 8px 24px #00000020;
-      border-color: var(--accent);
     }
     .blog-post h3 {
       font: 700 1.2rem "Inter", sans-serif;
-      margin-bottom: 0.8rem;
+      margin-bottom: 0.5rem;
       color: var(--gold);
     }
     .blog-post p {
       color: var(--muted);
-      line-height: 1.7;
-      margin: 0.6rem 0;
-      font-size: 0.95rem;
+      line-height: 1.6;
+      margin: 0.5rem 0;
     }
     .blog-meta {
       color: var(--muted);
       font-size: 0.85rem;
-      margin-top: 1rem;
-      padding-top: 1rem;
+      margin-top: 0.8rem;
+      padding-top: 0.8rem;
       border-top: 1px solid var(--border);
-      font-weight: 500;
     }
     .mode-buttons {
       display: flex;
       gap: 0.5rem;
       margin-bottom: 1.5rem;
       user-select: none;
-      flex-wrap: wrap;
     }
     .mode-btn {
       flex: 1;
@@ -530,17 +368,10 @@
       cursor: pointer;
       font-weight: 600;
       transition: 0.3s;
-      font-size: 0.9rem;
-      min-width: 140px;
     }
     .mode-btn.active {
       background: linear-gradient(135deg, var(--accent), var(--green));
       color: #000;
-      box-shadow: 0 8px 20px rgba(0, 224, 255, 0.3);
-    }
-    .mode-btn:hover:not(.active) {
-      border-color: var(--accent);
-      background: #fff2;
     }
     footer {
       text-align: center;
@@ -548,17 +379,11 @@
       color: var(--muted);
       font-size: 0.9rem;
       user-select: none;
-      line-height: 1.6;
     }
     footer a {
       color: var(--accent);
       text-decoration: none;
       border-bottom: 1px dashed var(--accent);
-      transition: 0.3s;
-    }
-    footer a:hover {
-      color: var(--gold);
-      border-bottom-color: var(--gold);
     }
     .contact {
       background: var(--card);
@@ -577,7 +402,6 @@
       color: var(--muted);
       font-size: 0.95rem;
       margin-bottom: 1rem;
-      line-height: 1.5;
     }
     .contact input, .contact textarea {
       margin-bottom: 0.6rem;
@@ -591,17 +415,12 @@
       color: #000;
       font: 600 0.95rem Inter;
       margin-top: 0.4rem;
-      font-weight: 700;
-    }
-    .btn-contact:hover {
-      filter: brightness(1.1);
-      transform: translateY(-2px);
     }
     .contact-note {
       font-size: 0.75rem;
       color: var(--muted);
-      margin-top: 0.8rem;
-      line-height: 1.4;
+      margin-top: 0.5rem;
+      line-height: 1.3;
     }
     .cur {
       background: var(--card);
@@ -622,7 +441,6 @@
       padding: 0.6rem 0;
       border-bottom: 1px solid var(--border);
       font-size: 1rem;
-      align-items: center;
     }
     .cur div:last-child {
       border: none;
@@ -635,209 +453,8 @@
     .copy-hint {
       color: var(--muted);
       font-size: 0.8rem;
-      margin-top: 0.6rem;
-      text-align: center;
-      font-weight: 500;
-    }
-    .feature-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 1.2rem;
-      margin: 2rem 0;
-    }
-    .feature-card {
-      background: #fff1;
-      border-radius: 16px;
-      padding: 1.5rem;
-      border: 1px solid var(--border);
-      display: flex;
-      gap: 1rem;
-      transition: 0.3s;
-    }
-    .feature-card:hover {
-      background: #fff2;
-      border-color: var(--accent);
-      transform: translateY(-2px);
-    }
-    .feature-card::before {
-      content: "✓";
-      font-size: 1.5rem;
-      color: var(--green);
-      font-weight: 700;
-      flex-shrink: 0;
-    }
-    .feature-card p {
-      margin: 0;
-      font-size: 0.9rem;
-      color: var(--muted);
-      line-height: 1.5;
-    }
-    .quick-compare-section {
-      background: linear-gradient(135deg, rgba(0, 224, 255, 0.1), rgba(0, 255, 157, 0.1));
-      border: 1px solid rgba(0, 224, 255, 0.3);
-      border-radius: 20px;
-      padding: 2rem;
-      margin-bottom: 2rem;
-    }
-    .quick-compare-section h2 {
-      margin: 0 0 1rem 0;
-      background: linear-gradient(90deg, var(--accent), var(--green));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-    .quick-compare-buttons {
-      display: flex;
-      gap: 1rem;
-      flex-wrap: wrap;
-    }
-    .modal-overlay {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: rgba(0, 0, 0, 0.7);
-      z-index: 1000;
-      align-items: center;
-      justify-content: center;
-    }
-    .modal-overlay.active {
-      display: flex;
-    }
-    .modal-content {
-      background: var(--card);
-      border-radius: 24px;
-      padding: 2.5rem;
-      border: 1px solid var(--border);
-      max-width: 90%;
-      width: 100%;
-      max-height: 90vh;
-      overflow-y: auto;
-      box-shadow: 0 40px 100px rgba(0, 0, 0, 0.7);
-      animation: modalSlideIn 0.3s ease-out;
-    }
-    @keyframes modalSlideIn {
-      from {
-        transform: translateY(20px);
-        opacity: 0;
-      }
-      to {
-        transform: translateY(0);
-        opacity: 1;
-      }
-    }
-    .modal-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 2rem;
-    }
-    .modal-header h2 {
-      margin: 0;
-      color: var(--gold);
-    }
-    .modal-close {
-      background: #fff1;
-      border: 1px solid var(--border);
-      border-radius: 50%;
-      width: 40px;
-      height: 40px;
-      font-size: 24px;
-      cursor: pointer;
-      color: var(--muted);
-      transition: 0.3s;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .modal-close:hover {
-      background: #fff2;
-      border-color: var(--accent);
-      color: var(--accent);
-    }
-    .comparison-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 2rem;
-      margin-bottom: 2rem;
-    }
-    .comparison-panel {
-      background: #fff0.5;
-      border-radius: 16px;
-      padding: 1.5rem;
-      border: 1px solid var(--border);
-    }
-    .comparison-panel-title {
-      font: 700 1rem Inter;
-      color: var(--gold);
-      margin-bottom: 1.5rem;
-      text-align: center;
-    }
-    .comparison-input-group {
-      margin-bottom: 1.2rem;
-    }
-    .comparison-result {
-      background: #fff1;
-      border-radius: 12px;
-      padding: 1.2rem;
-      border: 1px solid var(--border);
-      text-align: center;
-    }
-    .comparison-result-value {
-      font-size: 2rem;
-      font-weight: 800;
-      background: linear-gradient(90deg, var(--gold), var(--green));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin: 0.5rem 0;
-    }
-    .comparison-vs {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 1rem 0;
-      color: var(--muted);
-      font: 700 1.2rem Inter;
-    }
-    .comparison-vs::before,
-    .comparison-vs::after {
-      content: "";
-      flex: 1;
-      height: 1px;
-      background: var(--border);
-    }
-    .comparison-vs-text {
-      margin: 0 1rem;
-      color: var(--accent);
-    }
-    .history-sidebar-section {
-      margin-bottom: 2rem;
-    }
-    .history-sidebar-title {
-      font: 700 1rem Inter;
-      color: var(--gold);
-      margin-bottom: 1rem;
-      font-size: 0.9rem;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-    .clear-history-btn {
-      width: 100%;
-      padding: 10px;
-      background: #fff1;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      color: var(--muted);
-      cursor: pointer;
-      font-size: 0.8rem;
       margin-top: 0.5rem;
-      transition: 0.3s;
-    }
-    .clear-history-btn:hover {
-      background: rgba(255, 107, 107, 0.1);
-      border-color: var(--red);
-      color: var(--red);
+      text-align: center;
     }
     @media (max-width: 1320px) {
       .container {
@@ -858,36 +475,14 @@
         flex-direction: column;
         gap: 1rem;
       }
-      .nav-tabs {
-        justify-content: center;
-      }
-      .nav-divider {
-        display: none;
-      }
       .btn-row {
         grid-template-columns: 1fr;
-      }
-      .btn-row-3 {
-        grid-template-columns: 1fr 1fr;
       }
       .calc-block {
         padding: 1.5rem;
       }
       .mode-buttons {
         flex-direction: column;
-      }
-      .comparison-container {
-        grid-template-columns: 1fr;
-      }
-      .comparison-grid {
-        grid-template-columns: 1fr;
-      }
-      .feature-grid {
-        grid-template-columns: 1fr;
-      }
-      .modal-content {
-        padding: 1.5rem;
-        margin: 1rem;
       }
     }
   </style>
@@ -901,9 +496,7 @@
       <li><button class="nav-tab active" data-tab="nds" onclick="switchTab('nds')">НДС</button></li>
       <li><button class="nav-tab" data-tab="salary" onclick="switchTab('salary')">Зарплата</button></li>
       <li><button class="nav-tab" data-tab="usn" onclick="switchTab('usn')">УСН</button></li>
-      <li><button class="nav-tab" data-tab="margin" onclick="switchTab('margin')">Маржа</button></li>
-      <li><div class="nav-divider"></div></li>
-      <li><button class="nav-tab" data-tab="blog" onclick="switchTab('blog')">📚 Статьи</button></li>
+      <li><button class="nav-tab" data-tab="blog" onclick="switchTab('blog')">Статьи</button></li>
     </ul>
     <div class="theme-toggle" onclick="toggleTheme()" title="Сменить тему"></div>
   </div>
@@ -914,13 +507,6 @@
   <!-- Левая колонка -->
   <div class="sidebar">
     <div class="ad">Реклама 336×600</div>
-    
-    <div class="history-sidebar-section">
-      <div class="history-sidebar-title">📋 История</div>
-      <div id="history-list"></div>
-      <button class="clear-history-btn" onclick="clearHistory()">Очистить</button>
-    </div>
-
     <div class="cur">
       <h3>Курсы ЦБ РФ</h3>
       <div>USD <b id="usd">—</b></div>
@@ -956,15 +542,13 @@
 
         <div class="btn-row">
           <button class="btn-primary" onclick="calcNds()">Рассчитать</button>
-          <button class="btn-secondary small" onclick="copyNds()">Копировать</button>
+          <button class="btn-secondary" onclick="copyNds()">Скопировать</button>
         </div>
 
         <div class="result-box" id="nds-result" onclick="copyNds()">
           <div class="result-label">Введите сумму и нажмите «Рассчитать»</div>
           <div class="copy-hint">Клик для копирования</div>
         </div>
-
-        <div id="nds-advice"></div>
       </div>
 
       <h2>Примеры расчётов НДС</h2>
@@ -1004,15 +588,13 @@
 
         <div class="btn-row">
           <button class="btn-primary" onclick="calcSalary()">Рассчитать</button>
-          <button class="btn-secondary small" onclick="copySalary()">Копировать</button>
+          <button class="btn-secondary" onclick="copySalary()">Скопировать</button>
         </div>
 
         <div class="result-box" id="salary-result" onclick="copySalary()">
           <div class="result-label">Введите зарплату и нажмите «Рассчитать»</div>
           <div class="copy-hint">Клик для копирования</div>
         </div>
-
-        <div id="salary-advice"></div>
       </div>
 
       <h2>Примеры расчётов зарплаты</h2>
@@ -1053,15 +635,13 @@
 
         <div class="btn-row">
           <button class="btn-primary" onclick="calcUsn()">Рассчитать</button>
-          <button class="btn-secondary small" onclick="copyUsn()">Копировать</button>
+          <button class="btn-secondary" onclick="copyUsn()">Скопировать</button>
         </div>
 
         <div class="result-box" id="usn-result" onclick="copyUsn()">
           <div class="result-label">Введите доход и нажмите «Рассчитать»</div>
           <div class="copy-hint">Клик для копирования</div>
         </div>
-
-        <div id="usn-advice"></div>
       </div>
 
       <h2>Примеры расчётов УСН</h2>
@@ -1081,74 +661,10 @@
       </div>
     </div>
 
-    <!-- Маржа -->
-    <div id="margin-tab" class="tab-content">
-      <h1>Калькулятор маржи и наценки</h1>
-      <div class="subtitle">Расчет цены товара с маржей и НДС</div>
-
-      <div class="calc-block">
-        <div class="mode-buttons">
-          <button class="mode-btn active" onclick="switchMarginMode('margin', this)">По марже</button>
-          <button class="mode-btn" onclick="switchMarginMode('markup', this)">По наценке</button>
-        </div>
-
-        <label id="margin-cost-lbl">Себестоимость товара</label>
-        <input type="number" id="margin-cost" placeholder="100.00" step="0.01" inputmode="decimal" />
-
-        <label id="margin-percent-lbl">Маржа (%)</label>
-        <input type="number" id="margin-percent" placeholder="30" step="0.1" inputmode="decimal" />
-
-        <label>Ставка НДС</label>
-        <select id="margin-nds">
-          <option value="0">Без НДС (0%)</option>
-          <option value="10">НДС 10%</option>
-          <option value="20">НДС 20%</option>
-          <option value="22" selected>НДС 22% (с 2025)</option>
-        </select>
-
-        <div class="btn-row">
-          <button class="btn-primary" onclick="calcMargin()">Рассчитать</button>
-          <button class="btn-secondary small" onclick="copyMargin()">Копировать</button>
-        </div>
-
-        <div class="result-box" id="margin-result" onclick="copyMargin()">
-          <div class="result-label">Введите данные и нажмите «Рассчитать»</div>
-          <div class="copy-hint">Клик для копирования</div>
-        </div>
-
-        <div id="margin-advice"></div>
-      </div>
-
-      <h2>Примеры расчётов маржи</h2>
-      <div class="blog-post">
-        <h3>Пример: Маржа 30% на товар стоимостью 100 ₽</h3>
-        <p>Себестоимость: 100 ₽</p>
-        <p>Маржа 30%: 100 + (100 × 30%) = 130 ₽ (цена без НДС)</p>
-        <p>С НДС 22%: 130 × 1.22 = 158.60 ₽ (розничная цена)</p>
-        <p>Ваша прибыль: 30 ₽ на каждый товар</p>
-      </div>
-      <div class="blog-post">
-        <h3>Разница между маржей и наценкой</h3>
-        <p><strong>Маржа</strong> — это отношение прибыли к цене продажи.</p>
-        <p><strong>Наценка</strong> — это отношение прибыли к себестоимости.</p>
-        <p>Пример: товар стоит 100 ₽, продаём за 150 ₽</p>
-        <p>• Наценка: (150−100)/100 = 50% <br>• Маржа: (150−100)/150 = 33.3%</p>
-      </div>
-    </div>
-
     <!-- Блог -->
     <div id="blog-tab" class="tab-content">
       <h1>Статьи по налогам и калькуляциям</h1>
       <div class="subtitle">Полезные материалы для бухгалтеров, ИП и самозанятых</div>
-
-      <div class="feature-grid">
-        <div class="feature-card"><p>Точные расчёты с округлением до копеек</p></div>
-        <div class="feature-card"><p>История последних 10 расчётов</p></div>
-        <div class="feature-card"><p>Экспорт в PDF для документов</p></div>
-        <div class="feature-card"><p>Поддержка НДС 22% (с 2025) и других ставок</p></div>
-        <div class="feature-card"><p>Расчёт маржи, наценки с НДС</p></div>
-        <div class="feature-card"><p>Светлая и тёмная темы</p></div>
-      </div>
 
       <div class="blog-post">
         <h3>Ошибка 1: Неправильный расчёт при выделении НДС</h3>
@@ -1228,7 +744,7 @@
 </div>
 
 <footer>
-  © 2025 Calc.Pro — Набор онлайн-калькуляторов для расчёта НДС, зарплаты, налогов и маржи.<br />
+  © 2025 Calc.Pro — Набор онлайн-калькуляторов для расчёта НДС, зарплаты и налогов.<br />
   По вопросам пишите на <a href="mailto:info@calc.pro">info@calc.pro</a>
 </footer>
 
@@ -1238,60 +754,7 @@
   const r2 = (n) => Math.round((n + Number.EPSILON) * 100) / 100;
   const fmt = (n) => n.toLocaleString("ru-RU", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
-  // === ИСТОРИЯ РАСЧЁТОВ ===
-  class HistoryManager {
-    constructor() {
-      this.maxItems = 10;
-      this.loadHistory();
-    }
-    add(type, data) {
-      let history = JSON.parse(localStorage.getItem('calcHistory') || '[]');
-      history.unshift({ type, data, date: new Date().toLocaleString('ru-RU') });
-      history = history.slice(0, this.maxItems);
-      localStorage.setItem('calcHistory', JSON.stringify(history));
-      this.render();
-    }
-    loadHistory() {
-      this.items = JSON.parse(localStorage.getItem('calcHistory') || '[]');
-    }
-    render() {
-      this.loadHistory();
-      const container = $('#history-list');
-      if (!container) return;
-      container.innerHTML = this.items.map((item, idx) => `
-        <div class="history-item" onclick="historyManager.load(${idx})">
-          <div class="history-item-title">${item.type}</div>
-          <div class="history-item-meta">${item.date}</div>
-          <div class="history-item-value">${item.data.label}</div>
-        </div>
-      `).join('');
-    }
-    load(idx) {
-      const item = this.items[idx];
-      if (!item) return;
-      // Восстанавливаем данные в полях
-      Object.entries(item.data.fields || {}).forEach(([key, val]) => {
-        const el = $(key);
-        if (el) el.value = val;
-      });
-      // Запускаем расчёт
-      if (item.data.calc) window[item.data.calc]();
-    }
-    clear() {
-      if (confirm('Очистить историю расчётов?')) {
-        localStorage.removeItem('calcHistory');
-        this.items = [];
-        this.render();
-      }
-    }
-  }
-  const historyManager = new HistoryManager();
-
-  function clearHistory() {
-    historyManager.clear();
-  }
-
-  // === ПЕРЕКЛЮЧЕНИЕ ВКЛАДОК ===
+  // Переключение вкладок
   function switchTab(tabName) {
     $$('.tab-content').forEach(t => t.classList.remove('active'));
     $$('.nav-tab').forEach(t => t.classList.remove('active'));
@@ -1303,7 +766,7 @@
   const activeTab = localStorage.getItem('activeTab') || 'nds';
   switchTab(activeTab);
 
-  // === ПЕРЕКЛЮЧЕНИЕ ТЕМЫ ===
+  // Переключение темы
   function toggleTheme() {
     const next = document.body.dataset.theme === 'light' ? 'dark' : 'light';
     document.body.dataset.theme = next;
@@ -1312,29 +775,6 @@
 
   const savedTheme = localStorage.getItem('calcTheme');
   if (savedTheme) document.body.dataset.theme = savedTheme;
-
-  // === ЭКСПОРТ В PDF ===
-  function generatePdf(title, content) {
-    const element = document.createElement('div');
-    element.innerHTML = `
-      <h1 style="text-align:center;margin-bottom:30px;">${title}</h1>
-      <div style="font-family:Arial;font-size:14px;line-height:1.6;">
-        ${content}
-        <div style="margin-top:30px;font-size:12px;color:#999;">
-          <p>Дата: ${new Date().toLocaleString('ru-RU')}</p>
-          <p>Создано: Calc.Pro</p>
-        </div>
-      </div>
-    `;
-    const opt = {
-      margin: 10,
-      filename: `${title}.pdf`,
-      image: { type: 'jpeg', quality: 0.98 },
-      html2canvas: { scale: 2 },
-      jsPDF: { orientation: 'portrait', unit: 'mm', format: 'a4' }
-    };
-    html2pdf().set(opt).from(element).save();
-  }
 
   // ============ НДС ============
   let ndsMode = 'add';
@@ -1352,8 +792,7 @@
     const v = parseFloat($('#nds-sum').value);
     const r = +$('#nds-rate').value;
     if (isNaN(v) || v === 0) {
-      $('#nds-result').innerHTML = '<div style="color:var(--accent);">Введите корректную сумму</div>';
-      $('#nds-advice').innerHTML = '';
+      $('#nds-result').innerHTML = '<div style="color:#ff4757;">Введите корректную сумму</div>';
       ndsLastResult = '';
       return;
     }
@@ -1378,23 +817,6 @@
         <div class="result-sub">НДС ${r}%: <strong>${fmt(nds)} ₽</strong> | Итого: <strong>${fmt(total)} ₽</strong></div>
       </div>
     `;
-
-    // Советы
-    let advice = '';
-    if (r == 22) {
-      advice += '<div class="advice-box"><h4>💡 Совет: НДС 22% действует с 2025 года</h4><p>С 1 января 2025 основная ставка увеличена с 20% до 22%. Уточните, применяется ли льготная ставка к вашему товару.</p></div>';
-    }
-    if (ndsMode === 'extract' && total > 1000000) {
-      advice += '<div class="warning-box"><h4>⚠️ Внимание: большая сумма</h4><p>При работе с суммами более 1 млн ₽ проверьте расчёты дважды и согласуйте с бухгалтером.</p></div>';
-    }
-    $('#nds-advice').innerHTML = advice;
-
-    // История
-    historyManager.add('НДС', {
-      label: `${fmt(nds)} ₽`,
-      fields: { 'nds-sum': v, 'nds-rate': r },
-      calc: 'calcNds'
-    });
   }
 
   function copyNds() {
@@ -1407,16 +829,6 @@
     }).catch(() => {
       alert('Ошибка при копировании');
     });
-  }
-
-  function exportNdsPdf() {
-    const v = parseFloat($('#nds-sum').value);
-    if (isNaN(v) || !ndsLastResult) {
-      alert('Сначала сделайте расчёт');
-      return;
-    }
-    const content = ndsLastResult.replace(/\n/g, '<br>');
-    generatePdf('Расчет НДС', content);
   }
 
   // ============ ЗАРПЛАТА ============
@@ -1435,8 +847,7 @@
     const amount = parseFloat($('#salary-amount').value);
     const childrenSelect = +$('#salary-children').value;
     if (isNaN(amount) || amount === 0) {
-      $('#salary-result').innerHTML = '<div style="color:var(--accent);">Введите корректную сумму</div>';
-      $('#salary-advice').innerHTML = '';
+      $('#salary-result').innerHTML = '<div style="color:#ff4757;">Введите корректную сумму</div>';
       salaryLastResult = '';
       return;
     }
@@ -1454,7 +865,8 @@
       net = r2(gross - ndfl);
     } else {
       net = r2(amount);
-      gross = r2((net - childVoucher * 0.13) / 0.87);
+      const grossApprox = (net - childVoucher * 0.13) / 0.87;
+      gross = r2(grossApprox);
       const taxBase = Math.max(0, gross - childVoucher);
       ndfl = r2(taxBase * 0.13);
     }
@@ -1464,7 +876,14 @@
     const fss = r2(gross * 0.029);
     const totalEmployer = r2(gross + pfr + fomс + fss);
 
-    salaryLastResult = `Брутто: ${fmt(gross)} ₽\nНДФЛ (13%): ${fmt(ndfl)} ₽\nНа руки: ${fmt(net)} ₽\nВзносы ПФР: ${fmt(pfr)} ₽\nВзносы ФОМС: ${fmt(fomс)} ₽\nВзносы ФСС: ${fmt(fss)} ₽\nК оплате работодателем: ${fmt(totalEmployer)} ₽`;
+    salaryLastResult =
+`Брутто: ${fmt(gross)} ₽
+НДФЛ (13%): ${fmt(ndfl)} ₽
+На руки: ${fmt(net)} ₽
+Взносы ПФР: ${fmt(pfr)} ₽
+Взносы ФОМС: ${fmt(fomс)} ₽
+Взносы ФСС: ${fmt(fss)} ₽
+К оплате работодателем: ${fmt(totalEmployer)} ₽`;
 
     $('#salary-result').innerHTML = `
       <div style="width:100%;text-align:left;">
@@ -1484,23 +903,6 @@
         </div>
       </div>
     `;
-
-    // Советы
-    let advice = '';
-    if (childrenSelect > 0) {
-      advice += '<div class="advice-box"><h4>💡 Совет: вычеты снижают налоговую базу</h4><p>Вычеты на детей уменьшают налоговую базу, но не сам налог. Вычеты действуют до конца года.</p></div>';
-    }
-    if (gross > 500000) {
-      advice += '<div class="warning-box"><h4>⚠️ Внимание: высокая зарплата</h4><p>На суммы свыше 500 тыс. ₽ в месяц могут применяться дополнительные налоги. Проверьте с бухгалтером.</p></div>';
-    }
-    $('#salary-advice').innerHTML = advice;
-
-    // История
-    historyManager.add('Зарплата', {
-      label: `${fmt(net)} ₽ (на руки)`,
-      fields: { 'salary-amount': amount, 'salary-children': childrenSelect },
-      calc: 'calcSalary'
-    });
   }
 
   function copySalary() {
@@ -1513,15 +915,6 @@
     }).catch(() => {
       alert('Ошибка при копировании');
     });
-  }
-
-  function exportSalaryPdf() {
-    if (!salaryLastResult) {
-      alert('Сначала сделайте расчёт');
-      return;
-    }
-    const content = salaryLastResult.replace(/\n/g, '<br>');
-    generatePdf('Расчет зарплаты', content);
   }
 
   // ============ УСН ============
@@ -1550,8 +943,7 @@
     const income = parseFloat($('#usn-income').value);
     const quarterly = parseFloat($('#usn-quarterly').value);
     if (isNaN(income) || income === 0 || isNaN(quarterly) || quarterly === 0) {
-      $('#usn-result').innerHTML = '<div style="color:var(--accent);">Введите корректные значения</div>';
-      $('#usn-advice').innerHTML = '';
+      $('#usn-result').innerHTML = '<div style="color:#ff4757;">Введите корректные значения</div>';
       usnLastResult = '';
       return;
     }
@@ -1569,7 +961,15 @@
 
     const finalTax = Math.max(tax, minTax);
 
-    usnLastResult = `УСН ${usnMode === 'income' ? '6%' : '15%'}\nДоход: ${fmt(income)} ₽\n${usnMode === 'profit' ? 'Расходы: ' + fmt(parseFloat($('#usn-expense').value) || 0) + ' ₽\nПрибыль: ' + fmt(Math.max(0, income - (parseFloat($('#usn-expense').value) || 0))) + ' ₽\n' : ''}Налог: ${fmt(tax)} ₽\nМинимальный налог: ${fmt(minTax)} ₽\nК оплате: ${fmt(finalTax)} ₽`;
+    const expenseVal = parseFloat($('#usn-expense').value) || 0;
+    const profit = Math.max(0, income - expenseVal);
+
+    usnLastResult =
+`УСН ${usnMode === 'income' ? '6% доходов' : '15% прибыли'}
+Доход: ${fmt(income)} ₽
+${usnMode === 'profit' ? 'Расходы: ' + fmt(expenseVal) + ' ₽\nПрибыль: ' + fmt(profit) + ' ₽\n' : ''}Основной налог: ${fmt(tax)} ₽
+Минимальный налог (1% квартал): ${fmt(minTax)} ₽
+К оплате: ${fmt(finalTax)} ₽`;
 
     $('#usn-result').innerHTML = `
       <div style="width:100%;text-align:left;">
@@ -1582,23 +982,6 @@
         </div>
       </div>
     `;
-
-    // Советы
-    let advice = '';
-    if (finalTax === minTax && usnMode === 'income') {
-      advice += '<div class="warning-box"><h4>⚠️ Внимание: действует минимальный налог</h4><p>Ваш квартальный доход очень низкий. Проверьте расчёты и убедитесь, что данные верны.</p></div>';
-    }
-    if (usnMode === 'income' && income < 50000) {
-      advice += '<div class="advice-box"><h4>💡 Совет: рассчитайте вариант УСН 15%</h4><p>При низких доходах может быть выгоднее УСН 15% (если есть расходы) из-за минимального налога 1%.</p></div>';
-    }
-    $('#usn-advice').innerHTML = advice;
-
-    // История
-    historyManager.add('УСН', {
-      label: `${fmt(finalTax)} ₽`,
-      fields: { 'usn-income': income, 'usn-quarterly': quarterly, 'usn-expense': $('#usn-expense').value },
-      calc: 'calcUsn'
-    });
   }
 
   function copyUsn() {
@@ -1613,116 +996,7 @@
     });
   }
 
-  function exportUsnPdf() {
-    if (!usnLastResult) {
-      alert('Сначала сделайте расчёт');
-      return;
-    }
-    const content = usnLastResult.replace(/\n/g, '<br>');
-    generatePdf('Расчет УСН', content);
-  }
-
-  // ============ МАРЖА ============
-  let marginMode = 'margin';
-  let marginLastResult = '';
-
-  function switchMarginMode(mode, btn) {
-    marginMode = mode;
-    const lbl = $(`#margin-percent-lbl`);
-    lbl.textContent = mode === 'margin' ? 'Маржа (%)' : 'Наценка (%)';
-    $$('.mode-buttons')[3].querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-  }
-
-  function calcMargin() {
-    const cost = parseFloat($('#margin-cost').value);
-    const percent = parseFloat($('#margin-percent').value);
-    const ndsRate = +$('#margin-nds').value;
-
-    if (isNaN(cost) || cost === 0 || isNaN(percent) || percent === 0) {
-      $('#margin-result').innerHTML = '<div style="color:var(--accent);">Введите корректные значения</div>';
-      $('#margin-advice').innerHTML = '';
-      marginLastResult = '';
-      return;
-    }
-
-    let price, profit, profitPercent, priceWithNds;
-
-    if (marginMode === 'margin') {
-      // Маржа: price = cost + (cost * margin%)
-      price = r2(cost + (cost * percent / 100));
-      profit = r2(price - cost);
-      profitPercent = r2((profit / price) * 100);
-    } else {
-      // Наценка: price = cost * (1 + markup%)
-      price = r2(cost * (1 + percent / 100));
-      profit = r2(price - cost);
-      profitPercent = r2((profit / price) * 100);
-    }
-
-    priceWithNds = r2(price * (1 + ndsRate / 100));
-    const ndsFinal = r2(priceWithNds - price);
-
-    marginLastResult = `Себестоимость: ${fmt(cost)} ₽\nЦена без НДС: ${fmt(price)} ₽\nПрибыль: ${fmt(profit)} ₽\nМаржа: ${profitPercent.toFixed(2)}%\nНДС (${ndsRate}%): ${fmt(ndsFinal)} ₽\nРозничная цена: ${fmt(priceWithNds)} ₽`;
-
-    $('#margin-result').innerHTML = `
-      <div style="width:100%;text-align:left;">
-        <div style="margin-bottom:0.8rem;">
-          <div class="result-label">Розничная цена</div>
-          <div class="result-value">${fmt(priceWithNds)} ₽</div>
-        </div>
-        <div style="color:var(--muted);font-size:0.9rem;line-height:1.8;">
-          <div>Себестоимость: ${fmt(cost)} ₽</div>
-          <div>Цена без НДС: ${fmt(price)} ₽</div>
-          <div style="color:var(--green);font-weight:600;">Прибыль: ${fmt(profit)} ₽</div>
-          <div>Маржа: ${profitPercent.toFixed(2)}%</div>
-          <div style="margin-top:0.6rem;border-top:1px solid var(--border);padding-top:0.6rem;">
-            <div>НДС (${ndsRate}%): ${fmt(ndsFinal)} ₽</div>
-          </div>
-        </div>
-      </div>
-    `;
-
-    // Советы
-    let advice = '';
-    if (percent < 10) {
-      advice += '<div class="warning-box"><h4>⚠️ Внимание: низкая маржа</h4><p>Маржа менее 10% очень низкая. Учтите расходы на реализацию, логистику и персонал.</p></div>';
-    }
-    if (ndsRate === 0) {
-      advice += '<div class="advice-box"><h4>💡 Совет: НДС 0%</h4><p>НДС 0% применяется для экспорта и некоторых льготных товаров. Проверьте право на применение.</p></div>';
-    }
-    $('#margin-advice').innerHTML = advice;
-
-    // История
-    historyManager.add('Маржа', {
-      label: `${fmt(priceWithNds)} ₽`,
-      fields: { 'margin-cost': cost, 'margin-percent': percent, 'margin-nds': ndsRate },
-      calc: 'calcMargin'
-    });
-  }
-
-  function copyMargin() {
-    if (!marginLastResult) {
-      alert('Сначала сделайте расчёт');
-      return;
-    }
-    navigator.clipboard.writeText(marginLastResult).then(() => {
-      alert('Результат скопирован в буфер обмена');
-    }).catch(() => {
-      alert('Ошибка при копировании');
-    });
-  }
-
-  function exportMarginPdf() {
-    if (!marginLastResult) {
-      alert('Сначала сделайте расчёт');
-      return;
-    }
-    const content = marginLastResult.replace(/\n/g, '<br>');
-    generatePdf('Расчет маржи', content);
-  }
-
-  // === ЗАГРУЗКА КУРСОВ ===
+  // Загрузка курсов ЦБ
   fetch("https://www.cbr-xml-daily.ru/daily_json.js")
     .then((r) => r.json())
     .then((d) => {
@@ -1734,3 +1008,5 @@
     .catch(() => {});
 
 </script>
+</body>
+</html>
