@@ -1,0 +1,4 @@
+User-agent: *
+Disallow:
+Sitemap: https://nds-online22.ru/sitemap.xml
+Host: nds-online22.ru
