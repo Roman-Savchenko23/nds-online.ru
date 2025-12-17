@@ -434,6 +434,13 @@
       margin-top: 0.5rem;
       text-align: center;
     }
+    .error-msg {
+      color: #ff4757;
+      font-weight: 600;
+    }
+    .note {
+      font-size: 0.8rem; color: var(--muted); margin-top: 1rem; text-align: center;
+    }
     @media (max-width: 1320px) {
       .container { grid-template-columns: 1fr; }
       .sidebar { display: none; }
@@ -492,7 +499,7 @@
         </div>
 
         <label id="nds-lbl">Сумма без НДС</label>
-        <input type="number" id="nds-sum" placeholder="100000.00" step="0.01" inputmode="decimal" />
+        <input type="number" id="nds-sum" placeholder="100000.00" min="0" step="0.01" inputmode="decimal" />
 
         <label>Ставка НДС</label>
         <select id="nds-rate">
@@ -538,14 +545,14 @@
         </div>
 
         <label id="salary-lbl">Брутто зарплата</label>
-        <input type="number" id="salary-amount" placeholder="150000.00" step="0.01" inputmode="decimal" />
+        <input type="number" id="salary-amount" placeholder="150000.00" min="0" step="0.01" inputmode="decimal" />
 
         <label>Количество детей (налоговый вычет)</label>
         <select id="salary-children">
           <option value="0">0 детей</option>
-          <option value="1">1 ребёнок (1400 ₽)</option>
-          <option value="2">2 ребёнка (1400 ₽ каждый)</option>
-          <option value="3">3+ ребёнка (1400 ₽ × 2 + 3000 ₽)</option>
+          <option value="1">1 ребёнок (вычет 1400 ₽)</option>
+          <option value="2">2 ребёнка (вычет 2800 ₽)</option>
+          <option value="3">3+ ребёнка (вычет 5800 ₽)</option>
         </select>
 
         <div class="btn-row">
@@ -557,6 +564,7 @@
           <div class="result-label">Введите зарплату и нажмите «Рассчитать»</div>
           <div class="copy-hint">Клик для копирования</div>
         </div>
+        <div class="note">Расчет НДФЛ ведется по ставке 13%. Прогрессивная шкала (15-22%) не учитывается.</div>
       </div>
 
       <h2>Примеры расчётов зарплаты</h2>
@@ -564,14 +572,7 @@
         <h3>Пример: Зарплата 150 000 ₽ (брутто), без детей</h3>
         <p>НДФЛ 13%: 150 000 × 13% = 19 500 ₽.</p>
         <p>На руки (нетто): 150 000 − 19 500 = 130 500 ₽.</p>
-        <p>Взносы работодателя: ПФР 22% (33 000), ФОМС 5.1% (7 650), ФСС 2.9% (4 350) = 45 000 ₽ дополнительно к зарплате.</p>
-      </div>
-      <div class="blog-post">
-        <h3>Пример: Зарплата 150 000 ₽, 2 ребёнка</h3>
-        <p>Вычет: 1400 × 2 = 2800 ₽.</p>
-        <p>Налоговая база: 150 000 − 2800 = 147 200 ₽.</p>
-        <p>НДФЛ: 147 200 × 13% = 19 136 ₽.</p>
-        <p>На руки: 150 000 − 19 136 = 130 864 ₽.</p>
+        <p>Взносы работодателя (единый тариф 30%): 150 000 × 30% = 45 000 ₽.</p>
       </div>
     </div>
 
@@ -587,13 +588,13 @@
         </div>
 
         <label id="usn-lbl">Доход за месяц</label>
-        <input type="number" id="usn-income" placeholder="500000.00" step="0.01" inputmode="decimal" />
+        <input type="number" id="usn-income" placeholder="500000.00" min="0" step="0.01" inputmode="decimal" />
 
         <label id="usn-expense-lbl" style="display:none;">Расходы за месяц</label>
-        <input type="number" id="usn-expense" placeholder="300000.00" step="0.01" inputmode="decimal" style="display:none;" />
+        <input type="number" id="usn-expense" placeholder="300000.00" min="0" step="0.01" inputmode="decimal" style="display:none;" />
 
         <label>Доход за квартал (для расчёта минимального налога)</label>
-        <input type="number" id="usn-quarterly" placeholder="1500000.00" step="0.01" inputmode="decimal" />
+        <input type="number" id="usn-quarterly" placeholder="1500000.00" min="0" step="0.01" inputmode="decimal" />
 
         <div class="btn-row">
           <button class="btn-primary" onclick="calcUsn()">Рассчитать</button>
@@ -605,50 +606,19 @@
           <div class="copy-hint">Клик для копирования</div>
         </div>
       </div>
-
-      <h2>Примеры расчётов УСН</h2>
-      <div class="blog-post">
-        <h3>Пример УСН 6% доходов за месяц</h3>
-        <p>Доход за месяц: 500 000 ₽.</p>
-        <p>Налог: 500 000 × 6% = 30 000 ₽.</p>
-        <p>Квартальный налог: 30 000 × 3 = 90 000 ₽.</p>
-        <p>Минимальный налог 1%: 1 500 000 × 1% = 15 000 ₽.</p>
-      </div>
-      <div class="blog-post">
-        <h3>Пример УСН 15% прибыли за месяц</h3>
-        <p>Доход: 500 000 ₽, Расходы: 350 000 ₽.</p>
-        <p>Прибыль: 500 000 − 350 000 = 150 000 ₽.</p>
-        <p>Налог: 150 000 × 15% = 22 500 ₽.</p>
-        <p>Если за квартал убыток: минимум 1% = 1 500 000 × 1% = 15 000 ₽.</p>
-      </div>
     </div>
 
     <!-- Блог -->
     <div id="blog-tab" class="tab-content">
-      <h1>Статьи по налогам и калькуляциям</h1>
-      <div class="subtitle">Полезные материалы для бухгалтеров, ИП и самозанятых</div>
-
-      <div class="blog-post">
-        <h3>Ошибка 1: Неправильный расчёт при выделении НДС</h3>
-        <p>Для выделения НДС используется формула НДС = Сумма × Ставка / (100 + Ставка), а не просто Сумма × Ставка. [web:51]</p>
-        <p>Пример ошибки: из 122 000 ₽ выделяют 122 000 × 22% = 26 840 ₽ (неправильно).</p>
-        <p>Правильно: 122 000 × 22 / 122 = 22 000 ₽.</p>
-        <div class="blog-meta">Опубликовано: декабрь 2025 | Категория: НДС</div>
-      </div>
-
-      <div class="blog-post">
-        <h3>УСН 6% или УСН 15%: как выбрать?</h3>
-        <p>УСН 6% выгодна, если расходы меньше 50% доходов, УСН 15% — если расходы больше 50% доходов. [web:33][web:46]</p>
-        <p>Пример: при доходе 1 млн ₽ и расходах 700 000 ₽ УСН 15% = 45 000 ₽ выгоднее, чем УСН 6% = 60 000 ₽.</p>
-        <div class="blog-meta">Опубликовано: декабрь 2025 | Категория: УСН</div>
-      </div>
-
-      <div class="blog-post">
-        <h3>Как правильно считать НДФЛ на зарплату?</h3>
-        <p>Базовая ставка НДФЛ для большинства доходов — 13% для резидентов. [web:59][web:57]</p>
-        <p>Вычеты по детям, ипотеке и другим расходам уменьшают налоговую базу, а не сам налог.</p>
-        <div class="blog-meta">Опубликовано: декабрь 2025 | Категория: Зарплата</div>
-      </div>
+       <h1>Статьи по налогам и калькуляциям</h1>
+       <div class="subtitle">Полезные материалы для бухгалтеров, ИП и самозанятых</div>
+       <div class="blog-post">
+         <h3>Ошибка 1: Неправильный расчёт при выделении НДС</h3>
+         <p>Для выделения НДС используется формула НДС = Сумма × Ставка / (100 + Ставка), а не просто Сумма × Ставка.</p>
+         <p>Пример ошибки: из 122 000 ₽ выделяют 122 000 × 22% = 26 840 ₽ (неправильно).</p>
+         <p>Правильно: 122 000 × 22 / 122 = 22 000 ₽.</p>
+         <div class="blog-meta">Опубликовано: декабрь 2025 | Категория: НДС</div>
+       </div>
     </div>
 
   </div>
@@ -719,40 +689,26 @@
 
   function switchNdsMode(mode, btn) {
     ndsMode = mode;
-    const lbl = document.getElementById('nds-lbl');
-    if (lbl) lbl.textContent = mode === 'add' ? 'Сумма без НДС' : 'Сумма с НДС';
-
-    const group = document.querySelector('#nds-tab .mode-buttons');
-    if (group) {
-      group.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-    }
-
-    const box = document.getElementById('nds-result');
-    if (box) {
-      box.innerHTML = '<div class="result-label">Введите сумму и нажмите «Рассчитать»</div><div class="copy-hint">Клик для копирования</div>';
-      ndsLastResult = '';
-    }
+    $('#nds-lbl').textContent = mode === 'add' ? 'Сумма без НДС' : 'Сумма с НДС';
+    $('#nds-tab .mode-buttons').querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    $('#nds-result').innerHTML = '<div class="result-label">Введите сумму и нажмите «Рассчитать»</div><div class="copy-hint">Клик для копирования</div>';
+    ndsLastResult = '';
   }
 
   function calcNds() {
-    const sumEl = document.getElementById('nds-sum');
-    const rateEl = document.getElementById('nds-rate');
-    const box = document.getElementById('nds-result');
-    if (!sumEl || !rateEl || !box) return;
-
-    const raw = (sumEl.value || '').toString().replace(/\s/g, '');
-    const v = parseFloat(raw);
+    const sumEl = $('#nds-sum');
+    const rateEl = $('#nds-rate');
+    const box = $('#nds-result');
+    const v = parseFloat(sumEl.value);
     const r = +rateEl.value;
 
     if (!v || isNaN(v) || v <= 0) {
-      box.innerHTML = '<div style="color:#ff4757;">Введите положительную сумму</div>';
-      ndsLastResult = '';
+      box.innerHTML = '<div class="error-msg">Введите положительную сумму</div>';
       return;
     }
-    if (v > 999999999.99) {
-      box.innerHTML = '<div style="color:#ff4757;">Сумма слишком большая</div>';
-      ndsLastResult = '';
+    if (v > 999999999999.99) {
+      box.innerHTML = '<div class="error-msg">Сумма слишком большая</div>';
       return;
     }
 
@@ -767,150 +723,116 @@
       base = r2(total - nds);
     }
 
-    ndsLastResult =
-`Сумма без НДС: ${fmt(base)} ₽
-НДС ${r}%: ${fmt(nds)} ₽
-Итого с НДС: ${fmt(total)} ₽`;
-
+    ndsLastResult = `Сумма без НДС: ${fmt(base)} ₽\nНДС ${r}%: ${fmt(nds)} ₽\nИтого с НДС: ${fmt(total)} ₽`;
     box.innerHTML =
-      '<div style="width:100%;">' +
-        '<div class="result-label">Сумма без НДС</div>' +
-        '<div class="result-value">' + fmt(base) + ' ₽</div>' +
-        '<div class="result-sub">НДС ' + r + '%: <strong>' + fmt(nds) + ' ₽</strong> | Итого: <strong>' + fmt(total) + ' ₽</strong></div>' +
-      '</div>';
+      `<div style="width:100%;">
+        <div class="result-label">Сумма без НДС</div>
+        <div class="result-value">${fmt(base)} ₽</div>
+        <div class="result-sub">НДС ${r}%: <strong>${fmt(nds)} ₽</strong> | Итого: <strong>${fmt(total)} ₽</strong></div>
+      </div>`;
   }
 
   function copyNds() {
-    if (!ndsLastResult) {
-      alert('Сначала сделайте расчёт');
-      return;
-    }
-    if (!navigator.clipboard) {
-      alert('Скопировать автоматически нельзя, выделите текст и скопируйте вручную.');
-      return;
-    }
+    if (!ndsLastResult) return alert('Сначала сделайте расчёт');
     navigator.clipboard.writeText(ndsLastResult)
       .then(() => alert('Результат скопирован в буфер обмена'))
       .catch(() => alert('Ошибка при копировании'));
   }
+  
+  $('#nds-sum').addEventListener('keypress', (e) => e.key === 'Enter' && calcNds());
 
-  const ndsInput = document.getElementById('nds-sum');
-  if (ndsInput) {
-    ndsInput.addEventListener('keypress', (e) => {
-      if (e.key === 'Enter') calcNds();
-    });
-  }
-
-  // ===== ЗАРПЛАТА =====
+  // ===== ЗАРПЛАТА (ИСПРАВЛЕНО) =====
   let salaryMode = 'gross';
   let salaryLastResult = '';
 
   function switchSalaryMode(mode, btn) {
     salaryMode = mode;
-    const lbl = document.getElementById('salary-lbl');
-    if (lbl) lbl.textContent = mode === 'gross' ? 'Брутто зарплата' : 'Нетто (на руки)';
-
-    const group = document.querySelector('#salary-tab .mode-buttons');
-    if (group) {
-      group.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-    }
-
-    const box = document.getElementById('salary-result');
-    if (box) {
-      box.innerHTML = '<div class="result-label">Введите зарплату и нажмите «Рассчитать»</div><div class="copy-hint">Клик для копирования</div>';
-      salaryLastResult = '';
-    }
+    $('#salary-lbl').textContent = mode === 'gross' ? 'Брутто зарплата' : 'Нетто (на руки)';
+    $('#salary-tab .mode-buttons').querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    $('#salary-result').innerHTML = '<div class="result-label">Введите зарплату и нажмите «Рассчитать»</div><div class="copy-hint">Клик для копирования</div>';
+    salaryLastResult = '';
   }
 
   function calcSalary() {
-    const amountEl = document.getElementById('salary-amount');
-    const childrenEl = document.getElementById('salary-children');
-    const box = document.getElementById('salary-result');
-    if (!amountEl || !childrenEl || !box) return;
-
-    const raw = (amountEl.value || '').toString().replace(/\s/g, '');
-    const amount = parseFloat(raw);
-    const childrenSelect = +childrenEl.value;
+    const amountEl = $('#salary-amount');
+    const childrenEl = $('#salary-children');
+    const box = $('#salary-result');
+    const amount = parseFloat(amountEl.value);
+    const childrenCount = +childrenEl.value;
 
     if (!amount || isNaN(amount) || amount <= 0) {
-      box.innerHTML = '<div style="color:#ff4757;">Введите положительную сумму</div>';
-      salaryLastResult = '';
+      box.innerHTML = '<div class="error-msg">Введите положительную сумму</div>';
       return;
     }
 
     let childVoucher = 0;
-    if (childrenSelect === 1) childVoucher = 1400;
-    else if (childrenSelect === 2) childVoucher = 2800;
-    else if (childrenSelect === 3) childVoucher = 1400 * 2 + 3000;
+    if (childrenCount === 1) childVoucher = 1400;
+    else if (childrenCount === 2) childVoucher = 2800;
+    else if (childrenCount === 3) childVoucher = 5800; // 1400*2 + 3000
 
-    let gross, ndfl, net;
+    let gross, net, ndfl;
+
     if (salaryMode === 'gross') {
       gross = r2(amount);
       const taxBase = Math.max(0, gross - childVoucher);
       ndfl = r2(taxBase * 0.13);
       net = r2(gross - ndfl);
-    } else {
+    } else { // РЕЖИМ "НЕТТО -> БРУТТО" (ИСПРАВЛЕНО)
       net = r2(amount);
-      const grossApprox = (net + childVoucher * 0.13) / 0.87;
-      gross = r2(grossApprox);
-      const taxBase = Math.max(0, gross - childVoucher);
-      ndfl = r2(taxBase * 0.13);
+      // Итеративный метод для точного расчета брутто
+      let grossCandidate = net / 0.87; // Первое приближение
+      for (let i = 0; i < 10; i++) { // 10 итераций для точности
+        const taxBase = Math.max(0, grossCandidate - childVoucher);
+        const ndflCandidate = r2(taxBase * 0.13);
+        const calculatedNet = r2(grossCandidate - ndflCandidate);
+        if (Math.abs(net - calculatedNet) < 0.01) {
+            grossCandidate = r2(net + ndflCandidate); // Финальная коррекция
+            break;
+        }
+        grossCandidate += (net - calculatedNet);
+      }
+      gross = r2(grossCandidate);
+      // Пересчитываем НДФЛ от точного брутто
+      const finalTaxBase = Math.max(0, gross - childVoucher);
+      ndfl = r2(finalTaxBase * 0.13);
     }
+    
+    // Единый страховой тариф 30% (актуально на 2025)
+    const socialTarrif = r2(gross * 0.30);
+    const totalEmployer = r2(gross + socialTarrif);
 
-    const pfr = r2(gross * 0.22);
-    const fomc = r2(gross * 0.051);
-    const fss = r2(gross * 0.029);
-    const totalEmployer = r2(gross + pfr + fomc + fss);
-
-    salaryLastResult =
-`Брутто: ${fmt(gross)} ₽
-НДФЛ (13%): ${fmt(ndfl)} ₽
+    salaryLastResult = `Брутто: ${fmt(gross)} ₽
 На руки: ${fmt(net)} ₽
-Взносы ПФР: ${fmt(pfr)} ₽
-Взносы ФОМС: ${fmt(fomc)} ₽
-Взносы ФСС: ${fmt(fss)} ₽
+НДФЛ (13%): ${fmt(ndfl)} ₽
+Страховые взносы (30%): ${fmt(socialTarrif)} ₽
 К оплате работодателем: ${fmt(totalEmployer)} ₽`;
 
     box.innerHTML =
-      '<div style="width:100%;text-align:left;">' +
-        '<div style="margin-bottom:0.8rem;">' +
-          '<div class="result-label">Брутто</div>' +
-          '<div class="result-value">' + fmt(gross) + ' ₽</div>' +
-        '</div>' +
-        '<div style="color:var(--muted);font-size:0.9rem;line-height:1.7;">' +
-          '<div>НДФЛ (13%): ' + fmt(ndfl) + ' ₽</div>' +
-          '<div style="margin-top:0.4rem;color:var(--green);font-weight:600;">На руки: ' + fmt(net) + ' ₽</div>' +
-          '<div style="margin-top:0.6rem;border-top:1px solid var(--border);padding-top:0.6rem;">' +
-            '<div>Взносы ПФР (22%): ' + fmt(pfr) + ' ₽</div>' +
-            '<div>Взносы ФОМС (5.1%): ' + fmt(fomc) + ' ₽</div>' +
-            '<div>Взносы ФСС (2.9%): ' + fmt(fss) + ' ₽</div>' +
-            '<div style="margin-top:0.4rem;color:var(--gold);font-weight:600;">К оплате: ' + fmt(totalEmployer) + ' ₽</div>' +
-          '</div>' +
-        '</div>' +
-      '</div>';
+      `<div style="width:100%;text-align:left;">
+        <div style="margin-bottom:0.8rem;">
+          <div class="result-label">Сотрудник получает (на руки)</div>
+          <div class="result-value">${fmt(net)} ₽</div>
+        </div>
+        <div style="color:var(--muted);font-size:0.9rem;line-height:1.7;">
+          <div>Брутто-зарплата: ${fmt(gross)} ₽</div>
+          <div>НДФЛ (13%): ${fmt(ndfl)} ₽</div>
+          <div style="margin-top:0.6rem;border-top:1px solid var(--border);padding-top:0.6rem;">
+            <div>Страховые взносы (30%): ${fmt(socialTarrif)} ₽</div>
+            <div style="margin-top:0.4rem;color:var(--gold);font-weight:600;">Всего расходов у работодателя: ${fmt(totalEmployer)} ₽</div>
+          </div>
+        </div>
+      </div>`;
   }
 
   function copySalary() {
-    if (!salaryLastResult) {
-      alert('Сначала сделайте расчёт');
-      return;
-    }
-    if (!navigator.clipboard) {
-      alert('Скопировать автоматически нельзя, выделите текст и скопируйте вручную.');
-      return;
-    }
+    if (!salaryLastResult) return alert('Сначала сделайте расчёт');
     navigator.clipboard.writeText(salaryLastResult)
       .then(() => alert('Результат скопирован в буфер обмена'))
       .catch(() => alert('Ошибка при копировании'));
   }
 
-  const salaryInput = document.getElementById('salary-amount');
-  if (salaryInput) {
-    salaryInput.addEventListener('keypress', (e) => {
-      if (e.key === 'Enter') calcSalary();
-    });
-  }
+  $('#salary-amount').addEventListener('keypress', (e) => e.key === 'Enter' && calcSalary());
 
   // ===== УСН =====
   let usnMode = 'income';
@@ -918,118 +840,78 @@
 
   function switchUsnMode(mode, btn) {
     usnMode = mode;
-    const lbl = document.getElementById('usn-lbl');
-    const expLbl = document.getElementById('usn-expense-lbl');
-    const expInp = document.getElementById('usn-expense');
-
-    if (lbl) lbl.textContent = 'Доход за месяц';
-    if (mode === 'income') {
-      if (expLbl) expLbl.style.display = 'none';
-      if (expInp) expInp.style.display = 'none';
-    } else {
-      if (expLbl) expLbl.style.display = 'block';
-      if (expInp) expInp.style.display = 'block';
-    }
-
-    const group = document.querySelector('#usn-tab .mode-buttons');
-    if (group) {
-      group.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-    }
-
-    const box = document.getElementById('usn-result');
-    if (box) {
-      box.innerHTML = '<div class="result-label">Введите доход и нажмите «Рассчитать»</div><div class="copy-hint">Клик для копирования</div>';
-      usnLastResult = '';
-    }
+    $('#usn-lbl').textContent = 'Доход за месяц';
+    $('#usn-expense-lbl').style.display = mode === 'profit' ? 'block' : 'none';
+    $('#usn-expense').style.display = mode === 'profit' ? 'block' : 'none';
+    $('#usn-tab .mode-buttons').querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    $('#usn-result').innerHTML = '<div class="result-label">Введите доход и нажмите «Рассчитать»</div><div class="copy-hint">Клик для копирования</div>';
+    usnLastResult = '';
   }
 
   function calcUsn() {
-    const incomeEl = document.getElementById('usn-income');
-    const quarterlyEl = document.getElementById('usn-quarterly');
-    const expenseEl = document.getElementById('usn-expense');
-    const box = document.getElementById('usn-result');
-    if (!incomeEl || !quarterlyEl || !box) return;
+    const income = parseFloat($('#usn-income').value);
+    const quarterly = parseFloat($('#usn-quarterly').value);
+    const expense = parseFloat($('#usn-expense').value) || 0;
+    const box = $('#usn-result');
 
-    const incomeRaw = (incomeEl.value || '').toString().replace(/\s/g, '');
-    const quarterRaw = (quarterlyEl.value || '').toString().replace(/\s/g, '');
-    const income = parseFloat(incomeRaw);
-    const quarterly = parseFloat(quarterRaw);
-
-    if (!income || isNaN(income) || income <= 0 || !quarterly || isNaN(quarterly) || quarterly <= 0) {
-      box.innerHTML = '<div style="color:#ff4757;">Введите корректные значения дохода и квартального дохода</div>';
-      usnLastResult = '';
+    if (!income || isNaN(income) || income <= 0 || !quarterly || isNaN(quarterly) || quarterly < 0) {
+      box.innerHTML = '<div class="error-msg">Введите корректный доход</div>';
       return;
     }
 
-    let tax, minTax, profit = 0, expenseVal = 0;
+    let tax, minTax, profit = 0;
     if (usnMode === 'income') {
-      tax = r2(income * 0.06); // УСН 6% доходы [web:33][web:46]
-      minTax = r2(quarterly * 0.01);
+      tax = r2(income * 0.06);
     } else {
-      const expenseRaw = (expenseEl && expenseEl.value || '').toString().replace(/\s/g, '');
-      expenseVal = parseFloat(expenseRaw) || 0;
-      profit = Math.max(0, income - expenseVal);
-      tax = r2(profit * 0.15); // УСН 15% прибыль [web:33][web:46]
-      minTax = r2(quarterly * 0.01);
+      profit = Math.max(0, income - expense);
+      tax = r2(profit * 0.15);
     }
+    minTax = r2(quarterly * 0.01);
+    const finalTax = (usnMode === 'profit' && quarterly > 0) ? Math.max(tax, minTax) : tax;
 
-    const finalTax = Math.max(tax, minTax);
-
-    usnLastResult =
-`УСН ${usnMode === 'income' ? '6% доходов' : '15% прибыли'}
+    usnLastResult = `УСН ${usnMode === 'income' ? '6%' : '15%'}
 Доход за месяц: ${fmt(income)} ₽
-${usnMode === 'profit' ? 'Расходы за месяц: ' + fmt(expenseVal) + ' ₽\nПрибыль за месяц: ' + fmt(profit) + ' ₽\n' : ''}Основной налог за месяц: ${fmt(tax)} ₽
-Минимальный налог за квартал (1%): ${fmt(minTax)} ₽
-К оплате (учитывая минимум): ${fmt(finalTax)} ₽`;
+${usnMode === 'profit' ? `Расходы: ${fmt(expense)} ₽\nПрибыль: ${fmt(profit)} ₽\n` : ''}Основной налог: ${fmt(tax)} ₽
+Минимальный налог (1% от квартального дохода): ${fmt(minTax)} ₽
+К оплате: ${fmt(finalTax)} ₽`;
 
     box.innerHTML =
-      '<div style="width:100%;text-align:left;">' +
-        '<div class="result-label">Налог к оплате</div>' +
-        '<div class="result-value">' + fmt(finalTax) + ' ₽</div>' +
-        '<div class="result-sub">' +
-          (usnMode === 'income'
-            ? 'Основной налог (6% с дохода): ' + fmt(tax)
-            : 'Основной налог (15% с прибыли): ' + fmt(tax)) +
-          '<br>Минимальный налог за квартал (1% с дохода): ' + fmt(minTax) + ' ₽' +
-          '<br><strong style="color:var(--gold);">К учёту: ' + fmt(finalTax) + ' ₽</strong>' +
-        '</div>' +
-      '</div>';
+      `<div style="width:100%;text-align:left;">
+        <div class="result-label">Налог к оплате</div>
+        <div class="result-value">${fmt(finalTax)} ₽</div>
+        <div class="result-sub">
+          Основной налог: ${fmt(tax)} ₽<br>
+          Минимальный налог (за квартал): ${fmt(minTax)} ₽
+        </div>
+      </div>`;
   }
 
   function copyUsn() {
-    if (!usnLastResult) {
-      alert('Сначала сделайте расчёт');
-      return;
-    }
-    if (!navigator.clipboard) {
-      alert('Скопировать автоматически нельзя, выделите текст и скопируйте вручную.');
-      return;
-    }
+    if (!usnLastResult) return alert('Сначала сделайте расчёт');
     navigator.clipboard.writeText(usnLastResult)
       .then(() => alert('Результат скопирован в буфер обмена'))
       .catch(() => alert('Ошибка при копировании'));
   }
+  
+  $('#usn-income').addEventListener('keypress', (e) => e.key === 'Enter' && calcUsn());
+  $('#usn-expense').addEventListener('keypress', (e) => e.key === 'Enter' && calcUsn());
 
-  const usnInput = document.getElementById('usn-income');
-  if (usnInput) {
-    usnInput.addEventListener('keypress', (e) => {
-      if (e.key === 'Enter') calcUsn();
-    });
-  }
-
-  // ===== КУРСЫ ЦБ РФ =====
+  // ===== КУРСЫ ЦБ РФ (ИСПРАВЛЕНО) =====
   fetch("https://www.cbr-xml-daily.ru/daily_json.js")
     .then((r) => r.json())
     .then((d) => {
       const f = (n) => d.Valute[n].Value.toFixed(2) + " ₽";
-      try {
-        document.getElementById("usd").textContent = f("USD");
-        document.getElementById("eur").textContent = f("EUR");
-        document.getElementById("cny").textContent = f("CNY");
-      } catch (e) {}
+      $('#usd').textContent = f("USD");
+      $('#eur').textContent = f("EUR");
+      $('#cny').textContent = f("CNY");
     })
-    .catch(() => {});
+    .catch(() => {
+        const curDiv = $('.cur');
+        if (curDiv) {
+            curDiv.innerHTML += '<div style="font-size:0.8rem; color: #ff4757; text-align:center; border:none; padding-top:10px;">Ошибка загрузки курсов</div>';
+        }
+    });
 </script>
 
 </body>
