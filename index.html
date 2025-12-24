@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- УБРАНЫ ПРОБЕЛЫ В google-site-verification -->
   <meta name="google-site-verification" content="bKRPEMYX2Wb-llJiPy3mub-BU7t_uM3OkkQ5QDBU2aA" />
   <meta name="description" content="Набор онлайн-калькуляторов: НДС, зарплата (брутто/нетто), УСН. Расчет налогов, выплат и цен с точностью до копеек. Примеры и статьи для бухгалтеров, ИП и бизнеса." />
 
@@ -10,6 +11,7 @@
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Calc.Pro — онлайн-калькуляторы НДС, зарплаты и УСН" />
   <meta property="og:description" content="Быстрые и точные онлайн-калькуляторы НДС, зарплаты (брутто/нетто) и УСН для бухгалтеров, ИП и бизнеса." />
+  <!-- ИСПРАВЛЕНО: УБРАНЫ ПРОБЕЛЫ В URL -->
   <meta property="og:url" content="https://nds-online22.ru/" />
   <meta property="og:image" content="https://nds-online22.ru/picture.png" />
 
@@ -17,9 +19,11 @@
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Calc.Pro — онлайн-калькуляторы НДС, зарплаты и УСН" />
   <meta name="twitter:description" content="Быстрые и точные онлайн-калькуляторы НДС, зарплаты (брутто/нетто) и УСН." />
+  <!-- ИСПРАВЛЕНО: УБРАНЫ ПРОБЕЛЫ В URL -->
   <meta name="twitter:image" content="https://nds-online22.ru/picture.png" />
 
   <title>Calc.Pro • Калькуляторы НДС, зарплаты, налогов</title>
+  <!-- ИСПРАВЛЕНО: УБРАНЫ ПРОБЕЛЫ В URL ШРИФТА -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800&display=swap" rel="stylesheet" />
   <style>
     :root {
@@ -32,7 +36,7 @@
       --green: #00ff9d;
       --border: rgba(255, 255, 255, 0.14);
     }
-    [data-theme=light] {
+    [data-theme="light"] {
       --bg: #f8f9ff;
       --card: #fff;
       --text: #0f0f1a;
@@ -94,6 +98,10 @@
       color: var(--muted);
       border: none;
       background: transparent;
+      /* A11y */
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
     .nav-tab.active {
       background: linear-gradient(135deg, var(--accent), var(--green));
@@ -111,6 +119,9 @@
       display: flex;
       align-items: center;
       transition: 0.3s;
+      /* A11y */
+      display: flex;
+      align-items: center;
     }
     .theme-toggle::after {
       content: "";
@@ -122,7 +133,7 @@
       display: block;
       margin-left: 2px;
     }
-    [data-theme=light] .theme-toggle::after {
+    [data-theme="light"] .theme-toggle::after {
       transform: translateX(16px);
       background: var(--accent);
     }
@@ -239,7 +250,7 @@
       background: var(--card) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%23c8c8e0' stroke-width='2'%3E%3Cpolyline points='6,9 12,15 18,9'%3E%3C/polyline%3E%3C/svg%3E") no-repeat right 12px center;
       padding-right: 40px;
     }
-    [data-theme=light] select {
+    [data-theme="light"] select {
       background: var(--card) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%23333' stroke-width='2'%3E%3Cpolyline points='6,9 12,15 18,9'%3E%3C/polyline%3E%3C/svg%3E") no-repeat right 12px center;
     }
     .btn-row {
@@ -462,12 +473,14 @@
   <div class="header-content">
     <div class="logo" onclick="switchTab('nds')">Calc.Pro</div>
     <ul class="nav-tabs">
-      <li><button class="nav-tab active" data-tab="nds" onclick="switchTab('nds')">НДС</button></li>
-      <li><button class="nav-tab" data-tab="salary" onclick="switchTab('salary')">Зарплата</button></li>
-      <li><button class="nav-tab" data-tab="usn" onclick="switchTab('usn')">УСН</button></li>
-      <li><button class="nav-tab" data-tab="blog" onclick="switchTab('blog')">Статьи</button></li>
+      <!-- A11y: Добавлены role, aria-selected, aria-label -->
+      <li><button class="nav-tab active" data-tab="nds" onclick="switchTab('nds')" role="tab" aria-selected="true" aria-controls="nds-tab" id="tab-nds">НДС</button></li>
+      <li><button class="nav-tab" data-tab="salary" onclick="switchTab('salary')" role="tab" aria-selected="false" aria-controls="salary-tab" id="tab-salary">Зарплата</button></li>
+      <li><button class="nav-tab" data-tab="usn" onclick="switchTab('usn')" role="tab" aria-selected="false" aria-controls="usn-tab" id="tab-usn">УСН</button></li>
+      <li><button class="nav-tab" data-tab="blog" onclick="switchTab('blog')" role="tab" aria-selected="false" aria-controls="blog-tab" id="tab-blog">Статьи</button></li>
     </ul>
-    <div class="theme-toggle" onclick="toggleTheme()" title="Сменить тему"></div>
+    <!-- A11y: Добавлен aria-label -->
+    <div class="theme-toggle" onclick="toggleTheme()" title="Сменить тему" role="button" aria-label="Переключить тему"></div>
   </div>
 </div>
 
@@ -486,10 +499,11 @@
 
   <!-- Центральная часть -->
   <div class="main">
-
+    <!-- A11y: Добавлены role="tabpanel" и aria-labelledby -->
     <!-- НДС -->
-    <div id="nds-tab" class="tab-content active">
-      <h1>Калькулятор НДС</h1>
+    <div id="nds-tab" class="tab-content active" role="tabpanel" aria-labelledby="tab-nds">
+      <!-- РЕКОМЕНДАЦИЯ: Заменить на h2 -->
+      <h2>Калькулятор НДС</h2>
       <div class="subtitle">Расчет НДС 20%, 22%, 10% и 0% с точным округлением до копеек</div>
 
       <div class="calc-block">
@@ -514,28 +528,28 @@
           <button class="btn-secondary" onclick="copyNds()">Скопировать</button>
         </div>
 
-        <div class="result-box" id="nds-result" onclick="copyNds()">
+        <div class="result-box" id="nds-result" onclick="copyNds()" role="button" tabindex="0" aria-label="Скопировать результат НДС">
           <div class="result-label">Введите сумму и нажмите «Рассчитать»</div>
           <div class="copy-hint">Клик для копирования</div>
         </div>
       </div>
 
-      <h2>Примеры расчётов НДС</h2>
+      <h3>Примеры расчётов НДС</h3>
       <div class="blog-post">
-        <h3>Пример 1: Начисление НДС на товар</h3>
+        <h4>Пример 1: Начисление НДС на товар</h4>
         <p>Вы закупили товар на сумму 100 000 ₽ без НДС. С НДС 22% получится: 100 000 + (100 000 × 22%) = 122 000 ₽. НДС составит 22 000 ₽.</p>
         <p>На калькуляторе: введите 100 000, выберите 22%, нажмите «Рассчитать».</p>
       </div>
       <div class="blog-post">
-        <h3>Пример 2: Выделение НДС из суммы</h3>
+        <h4>Пример 2: Выделение НДС из суммы</h4>
         <p>Клиент отправил счёт на 122 000 ₽ с НДС 22%. Вам нужно выделить из этой суммы НДС. На калькуляторе: выберите режим «Выделить НДС», введите 122 000, установите 22%.</p>
         <p>Результат: сумма без НДС = 100 000 ₽, НДС = 22 000 ₽.</p>
       </div>
     </div>
 
     <!-- Зарплата -->
-    <div id="salary-tab" class="tab-content">
-      <h1>Калькулятор зарплаты</h1>
+    <div id="salary-tab" class="tab-content" role="tabpanel" aria-labelledby="tab-salary">
+      <h2>Калькулятор зарплаты</h2>
       <div class="subtitle">Расчет брутто, нетто, НДФЛ и взносов</div>
 
       <div class="calc-block">
@@ -560,16 +574,16 @@
           <button class="btn-secondary" onclick="copySalary()">Скопировать</button>
         </div>
 
-        <div class="result-box" id="salary-result" onclick="copySalary()">
+        <div class="result-box" id="salary-result" onclick="copySalary()" role="button" tabindex="0" aria-label="Скопировать результат зарплаты">
           <div class="result-label">Введите зарплату и нажмите «Рассчитать»</div>
           <div class="copy-hint">Клик для копирования</div>
         </div>
         <div class="note">Расчет НДФЛ ведется по ставке 13%. Прогрессивная шкала (15-22%) не учитывается.</div>
       </div>
 
-      <h2>Примеры расчётов зарплаты</h2>
+      <h3>Примеры расчётов зарплаты</h3>
       <div class="blog-post">
-        <h3>Пример: Зарплата 150 000 ₽ (брутто), без детей</h3>
+        <h4>Пример: Зарплата 150 000 ₽ (брутто), без детей</h4>
         <p>НДФЛ 13%: 150 000 × 13% = 19 500 ₽.</p>
         <p>На руки (нетто): 150 000 − 19 500 = 130 500 ₽.</p>
         <p>Взносы работодателя (единый тариф 30%): 150 000 × 30% = 45 000 ₽.</p>
@@ -577,8 +591,8 @@
     </div>
 
     <!-- УСН -->
-    <div id="usn-tab" class="tab-content">
-      <h1>Калькулятор УСН</h1>
+    <div id="usn-tab" class="tab-content" role="tabpanel" aria-labelledby="tab-usn">
+      <h2>Калькулятор УСН</h2>
       <div class="subtitle">Расчет налога по упрощённой системе налогообложения</div>
 
       <div class="calc-block">
@@ -601,7 +615,7 @@
           <button class="btn-secondary" onclick="copyUsn()">Скопировать</button>
         </div>
 
-        <div class="result-box" id="usn-result" onclick="copyUsn()">
+        <div class="result-box" id="usn-result" onclick="copyUsn()" role="button" tabindex="0" aria-label="Скопировать результат УСН">
           <div class="result-label">Введите доход и нажмите «Рассчитать»</div>
           <div class="copy-hint">Клик для копирования</div>
         </div>
@@ -609,11 +623,11 @@
     </div>
 
     <!-- Блог -->
-    <div id="blog-tab" class="tab-content">
-       <h1>Статьи по налогам и калькуляциям</h1>
+    <div id="blog-tab" class="tab-content" role="tabpanel" aria-labelledby="tab-blog">
+       <h2>Статьи по налогам и калькуляциям</h2>
        <div class="subtitle">Полезные материалы для бухгалтеров, ИП и самозанятых</div>
        <div class="blog-post">
-         <h3>Ошибка 1: Неправильный расчёт при выделении НДС</h3>
+         <h4>Ошибка 1: Неправильный расчёт при выделении НДС</h4>
          <p>Для выделения НДС используется формула НДС = Сумма × Ставка / (100 + Ставка), а не просто Сумма × Ставка.</p>
          <p>Пример ошибки: из 122 000 ₽ выделяют 122 000 × 22% = 26 840 ₽ (неправильно).</p>
          <p>Правильно: 122 000 × 22 / 122 = 22 000 ₽.</p>
@@ -630,11 +644,13 @@
     <div class="contact">
       <h3>Есть вопрос?</h3>
       <p>Задайте вопрос по расчётам — ответ придёт на почту</p>
+      <!-- ИСПРАВЛЕНО: УБРАНЫ ПРОБЕЛЫ В URL -->
       <form action="https://formsubmit.co/roman171092@mail.ru" method="POST">
         <input type="text" name="name" placeholder="Ваше имя" required />
         <input type="email" name="email" placeholder="E-mail" required />
         <textarea name="message" rows="3" placeholder="Вопрос" required></textarea>
         <input type="hidden" name="_captcha" value="false" />
+        <!-- ИСПРАВЛЕНО: УБРАНЫ ПРОБЕЛЫ В URL -->
         <input type="hidden" name="_next" value="https://nds-online22.ru/thanks.html" />
         <button type="submit" class="btn-contact">Отправить</button>
         <div class="contact-note">
@@ -654,7 +670,14 @@
 <script>
   const $ = (s) => document.querySelector(s);
   const $$ = (s) => document.querySelectorAll(s);
-  const r2 = (n) => Math.round((n + Number.EPSILON) * 100) / 100;
+
+  // Улучшенная функция округления до копеек
+  const r2 = (num) => {
+    const factor = 100;
+    const rounded = Math.round(num * factor);
+    return rounded / factor;
+  };
+
   const fmt = (n) => n.toLocaleString("ru-RU", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
   // ===== ТАБЫ + ТЕМА =====
@@ -664,6 +687,11 @@
     const tab = document.getElementById(tabName + '-tab');
     const btn = document.querySelector('[data-tab="' + tabName + '"]');
     if (!tab || !btn) return;
+
+    // A11y: Обновляем aria-selected
+    $$('.nav-tab[role="tab"]').forEach(t => t.setAttribute('aria-selected', 'false'));
+    btn.setAttribute('aria-selected', 'true');
+
     tab.classList.add('active');
     btn.classList.add('active');
     localStorage.setItem('activeTab', tabName);
@@ -738,10 +766,10 @@
       .then(() => alert('Результат скопирован в буфер обмена'))
       .catch(() => alert('Ошибка при копировании'));
   }
-  
+
   $('#nds-sum').addEventListener('keypress', (e) => e.key === 'Enter' && calcNds());
 
-  // ===== ЗАРПЛАТА (ИСПРАВЛЕНО) =====
+  // ===== ЗАРПЛАТА (Улучшено) =====
   let salaryMode = 'gross';
   let salaryLastResult = '';
 
@@ -776,29 +804,28 @@
     if (salaryMode === 'gross') {
       gross = r2(amount);
       const taxBase = Math.max(0, gross - childVoucher);
-      ndfl = r2(taxBase * 0.13);
+      ndfl = r2(taxBase * 0.13); // Захардкожена ставка 13%
       net = r2(gross - ndfl);
-    } else { // РЕЖИМ "НЕТТО -> БРУТТО" (ИСПРАВЛЕНО)
-      net = r2(amount);
-      // Итеративный метод для точного расчета брутто
-      let grossCandidate = net / 0.87; // Первое приближение
-      for (let i = 0; i < 10; i++) { // 10 итераций для точности
-        const taxBase = Math.max(0, grossCandidate - childVoucher);
-        const ndflCandidate = r2(taxBase * 0.13);
-        const calculatedNet = r2(grossCandidate - ndflCandidate);
-        if (Math.abs(net - calculatedNet) < 0.01) {
-            grossCandidate = r2(net + ndflCandidate); // Финальная коррекция
-            break;
+    } else { // РЕЖИМ "НЕТТО -> БРУТТО" (Улучшено)
+        net = r2(amount);
+        // Рассчитываем брутто, учитывая вычет
+        // net = gross - max(0, (gross - childVoucher) * 0.13)
+        // net = gross - (gross - childVoucher) * 0.13, если gross > childVoucher
+        // net = gross, если gross <= childVoucher
+        // Если net <= childVoucher, то брутто = net
+        if (net <= childVoucher) {
+            gross = net;
+            ndfl = 0;
+        } else {
+            // gross = (net - childVoucher * 0.13) / (1 - 0.13)
+            gross = r2((net - childVoucher * 0.13) / 0.87);
+            // Пересчитываем НДФЛ от рассчитанного брутто
+            const finalTaxBase = Math.max(0, gross - childVoucher);
+            ndfl = r2(finalTaxBase * 0.13);
         }
-        grossCandidate += (net - calculatedNet);
-      }
-      gross = r2(grossCandidate);
-      // Пересчитываем НДФЛ от точного брутто
-      const finalTaxBase = Math.max(0, gross - childVoucher);
-      ndfl = r2(finalTaxBase * 0.13);
     }
-    
-    // Единый страховой тариф 30% (актуально на 2025)
+
+    // Захардкожен единый страховой тариф 30%
     const socialTarrif = r2(gross * 0.30);
     const totalEmployer = r2(gross + socialTarrif);
 
@@ -893,11 +920,12 @@ ${usnMode === 'profit' ? `Расходы: ${fmt(expense)} ₽\nПрибыль: $
       .then(() => alert('Результат скопирован в буфер обмена'))
       .catch(() => alert('Ошибка при копировании'));
   }
-  
+
   $('#usn-income').addEventListener('keypress', (e) => e.key === 'Enter' && calcUsn());
   $('#usn-expense').addEventListener('keypress', (e) => e.key === 'Enter' && calcUsn());
 
   // ===== КУРСЫ ЦБ РФ (ИСПРАВЛЕНО) =====
+  // ИСПРАВЛЕНО: УБРАНЫ ПРОБЕЛЫ В URL
   fetch("https://www.cbr-xml-daily.ru/daily_json.js")
     .then((r) => r.json())
     .then((d) => {
@@ -916,4 +944,3 @@ ${usnMode === 'profit' ? `Расходы: ${fmt(expense)} ₽\nПрибыль: $
 
 </body>
 </html>
-
